@@ -126,12 +126,17 @@ def breadthFirstSearch(problem):
     while True:
         if queue.isEmpty():
             # empty queue represents FALIURE
-            return []
+            break
         selected_state, path = queue.pop()
         visited.append(selected_state)
         if problem.isGoalState(selected_state):
             break
         successors = problem.getSuccessors(selected_state)
+        # print(successors)
+        # print('hi')
+        # successors.sort(key=lambda x: x[0], reverse=True)
+        # print(successors)
+        # print('hii')
         if successors:
             for successor in successors:
                 new_coordinate = successor[0]

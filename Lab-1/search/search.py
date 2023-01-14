@@ -112,22 +112,21 @@ def depthFirstSearch(problem):
 
     return path
 
-    util.raiseNotDefined()
-
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    queue = util.Queue() # queue will include coordinates and path
+    queue_path = util.Queue()
+    queue_state = util.Queue()
     visited = []
-    path = [] # list of the directions agent is required to take
+    path = []
     initial_state = problem.getStartState()
-    queue.push((initial_state, []))
+    queue_path.push(path)
+    queue_state.push(initial_state)
 
     while True:
-        if queue.isEmpty():
-            # empty queue represents FALIURE
-            return []
-        selected_state, path = queue.pop()
+        if queue_state.isEmpty():
+            return [] # represents failed state
+        selected_state = queue_state.pop()
+        path = queue_path.pop()
         visited.append(selected_state)
         if problem.isGoalState(selected_state):
             break
@@ -136,13 +135,11 @@ def breadthFirstSearch(problem):
             for successor in successors:
                 new_coordinate = successor[0]
                 new_direction = successor[1]
-                if new_coordinate not in visited:
+                if new_coordinate not in visited and new_coordinate not in queue_state.list:
                     new_path = path + [new_direction]
-                    queue.push((new_coordinate, new_path))
-
+                    queue_path.push(new_path)
+                    queue_state.push(new_coordinate)
     return path
-
-    util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""

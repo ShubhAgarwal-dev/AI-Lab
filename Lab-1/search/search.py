@@ -104,8 +104,7 @@ def depthFirstSearch(problem):
         successors = problem.getSuccessors(selected_state)
         if successors:
             for successor in successors:
-                new_coordinate = successor[0]
-                new_direction = successor[1]
+                new_coordinate, new_direction, _ = successor
                 if new_coordinate not in visited:
                     new_path = path + [new_direction]
                     stack.push((new_coordinate, new_path))
@@ -133,8 +132,7 @@ def breadthFirstSearch(problem):
         successors = problem.getSuccessors(selected_state)
         if successors:
             for successor in successors:
-                new_coordinate = successor[0]
-                new_direction = successor[1]
+                new_coordinate, new_direction, _ = successor
                 if new_coordinate not in visited and new_coordinate not in queue_state.list:
                     new_path = path + [new_direction]
                     queue_path.push(new_path)

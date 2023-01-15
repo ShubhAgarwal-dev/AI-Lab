@@ -86,62 +86,47 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-
-    stack = util.Stack() # stack will include coordinates and path
-    visited = []
-    path = [] # list of the directions agent is required to take
-    initial_state = problem.getStartState()
-    stack.push((initial_state, []))
-
-    while True:
-        if stack.isEmpty():
-            # empty stack represents FALIURE
-            return []
-        selected_state, path = stack.pop()
-        visited.append(selected_state)
-        if problem.isGoalState(selected_state):
-            break
-        successors = problem.getSuccessors(selected_state)
-        if successors:
-            for successor in successors:
-                new_coordinate = successor[0]
-                new_direction = successor[1]
-                if new_coordinate not in visited:
-                    new_path = path + [new_direction]
-                    stack.push((new_coordinate, new_path))
-
-    return path
-
+    "*** YOUR CODE HERE ***"
+    print("DFS")
+    opQueue=util.Stack()
+    visited=set()
+    opQueue.push([problem.getStartState(),[]])
+    if(problem.isGoalState(problem.getStartState())):
+        return []
+    else:
+        while(not opQueue.isEmpty()):
+            state = opQueue.pop()
+            if(problem.isGoalState(state[0])):
+                return state[1]
+            visited.add(state[0])
+            successors = problem.getSuccessors(state[0])
+            if(successors):
+                for i in successors:
+                    if(not i[0] in visited):
+                        opQueue.push([i[0],state[1]+[i[1]]])
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    queue = util.Queue() # queue will include coordinates and path
-    visited = []
-    path = [] # list of the directions agent is required to take
-    initial_state = problem.getStartState()
-    queue.push((initial_state, []))
-
-    while True:
-        if queue.isEmpty():
-            # empty queue represents FALIURE
-            return []
-        selected_state, path = queue.pop()
-        visited.append(selected_state)
-        if problem.isGoalState(selected_state):
-            break
-        successors = problem.getSuccessors(selected_state)
-        if successors:
-            for successor in successors:
-                new_coordinate = successor[0]
-                new_direction = successor[1]
-                if new_coordinate not in visited:
-                    new_path = path + [new_direction]
-                    queue.push((new_coordinate, new_path))
-
-    return path
-
+    print("BFS")
+    opQueue=util.Queue()
+    visited=set()
+    opQueue.push([problem.getStartState(),[]])
+    if(problem.isGoalState(problem.getStartState())):
+        return []
+    else:
+        while(not opQueue.isEmpty()):
+            state = opQueue.pop()
+            if(problem.isGoalState(state[0])):
+                return state[1]
+            visited.add(state[0])
+            successors = problem.getSuccessors(state[0])
+            if(successors):
+                for i in successors:
+                    if(not i[0] in visited):
+                        opQueue.push([i[0],state[1]+[i[1]]])
+                        visited.add(i[0])
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):

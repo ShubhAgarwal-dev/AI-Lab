@@ -18,6 +18,7 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
+import heapq
 
 class SearchProblem:
     """
@@ -139,65 +140,24 @@ def breadthFirstSearch(problem):
                     queue_state.push(new_coordinate)
     return path
 
+class ExtendedPriorotyQueue(util.PriorityQueue):
+    
+    def __init__(self):
+        util.PriorityQueue.__init__(self)
+
+    def pop_new(self) -> tuple:
+        (cost, _, item) = heapq.heappop(self.heap)
+        return (item, cost)
+
+    def get_cost(self, item) -> int:
+        for cost, _, i in self.heap:
+            if i == item:
+                return cost
+        return 0
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    # path = []
-    # initial_state = problem.getStartState()
-    # frontier = util.PriorityQueue()
-    # frontier.push((initial_state, path, 0), priority=0)
-    # frontier_set = []
-    # frontier_set.append(initial_state)
-    # explored = []
-    # while True:
-    #     if frontier.isEmpty():
-    #         return [] # Example of failed solution
-    #     sel_state, path, cost = frontier.pop()
-    #     frontier_set.remove(sel_state)
-    #     explored.append(sel_state)
-    #     if problem.isGoalState(sel_state):
-    #         break
-    #     successors = problem.getSuccessors(sel_state)
-    #     if successors:
-    #         for child in successors:
-    #             new_state, new_dir, add_cost = child
-    #             new_cost = cost + add_cost
-    #             new_path = path + [new_dir]
-    #             if new_state not in explored and new_state not in frontier_set:
-    #                 frontier.push((new_state, new_path, new_cost), new_cost)
-    #                 frontier_set.append(new_state)
-    #             if new_state in frontier_set:
-    #                 pass
-    # return path
-
-    # path = []
-    # initial_state = problem.getStartState()
-    # frontier = util.PriorityQueue()
-    # frontier.push((initial_state, path), priority=0)
-    # frontier_set = []
-    # frontier_set.append(initial_state)
-    # explored = []
-    # while True:
-    #     if frontier.isEmpty():
-    #         return [] # Example of failed solution
-    #     (item), cost= frontier.pop_new()
-    #     sel_state, path = item
-    #     frontier_set.remove(sel_state)
-    #     explored.append(sel_state)
-    #     if problem.isGoalState(sel_state):
-    #         break
-    #     successors = problem.getSuccessors(sel_state)
-    #     if successors:
-    #         for child in successors:
-    #             new_state, new_dir, add_cost = child
-    #             new_cost = add_cost + cost
-    #             new_path = path + [new_dir]
-    #             if new_state not in explored and new_state not in frontier_set:
-    #                 frontier.push((new_state, new_path), new_cost)
-    #                 frontier_set.append(new_state)
-    # return path
-
     initial_state = problem.getStartState()
-    frontier = util.PriorityQueue()
+    frontier = ExtendedPriorotyQueue()
     frontier.push(initial_state, 0)
     path_dic = {initial_state:[]}
     explored =[]
@@ -206,8 +166,7 @@ def uniformCostSearch(problem):
             return [] 
         sel_state, cost= frontier.pop_new()
         explored.append(sel_state)
-        path = path_dic[sel_state]
-        path_dic.pop(sel_state)
+        path = path_dic.pop(sel_state)
         if problem.isGoalState(sel_state):
             return path
         successors = problem.getSuccessors(sel_state)
@@ -220,8 +179,10 @@ def uniformCostSearch(problem):
                     frontier.push(new_state, new_cost)
                     path_dic.update({new_state:new_path})
                 elif new_state in path_dic.keys():
-                    frontier.update(new_state, new_cost)
-                    path_dic[new_state] = new_path
+                    old_cost = frontier.get_cost(new_state)
+                    if old_cost > new_cost:
+                        frontier.update(new_state, new_cost)
+                        path_dic[new_state] = new_path
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):

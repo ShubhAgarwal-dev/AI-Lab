@@ -188,10 +188,6 @@ class PriorityQueue:
         (_, _, item) = heapq.heappop(self.heap)
         return item
 
-    def pop_new(self):
-        (cost, _, item) = heapq.heappop(self.heap)
-        return (item, cost)
-
     def isEmpty(self):
         return len(self.heap) == 0
 

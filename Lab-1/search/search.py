@@ -145,11 +145,11 @@ class ExtendedPriorotyQueue(util.PriorityQueue):
     def __init__(self):
         util.PriorityQueue.__init__(self)
 
-    def pop_new(self) -> tuple:
+    def pop_new(self):
         (cost, _, item) = heapq.heappop(self.heap)
         return (item, cost)
 
-    def get_cost(self, item) -> int:
+    def get_cost(self, item):
         for cost, _, i in self.heap:
             if i == item:
                 return cost
@@ -194,7 +194,35 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+    initial_state = problem.getStartState()
+    frontier = ExtendedPriorotyQueue()
+    frontier.push(initial_state, heuristic(initial_state, problem))
+    path_dic = {initial_state:[]}
+    explored = []
+    while True:
+        if frontier.isEmpty():
+            return [] 
+        sel_state, cost= frontier.pop_new()
+        explored.append(sel_state)
+        path = path_dic.pop(sel_state)
+        if problem.isGoalState(sel_state):
+            return path
+        successors = problem.getSuccessors(sel_state)
+        if successors:
+            old_heu = heuristic(sel_state, problem)
+            for child in successors:
+                new_state, new_dir, add_cost = child
+                new_path = path + [new_dir]
+                new_cost = cost + add_cost + heuristic(new_state, problem) - old_heu
+                if new_state not in explored and new_state not in path_dic.keys():
+                    frontier.push(new_state, new_cost)
+                    path_dic.update({new_state:new_path})
+                    # print(frontier.heap[i][2] for i in range(len(frontier.heap)))
+                elif new_state in path_dic.keys():
+                    old_cost = frontier.get_cost(new_state)
+                    if old_cost >= new_cost:
+                        frontier.update(new_state, new_cost)
+                        path_dic[new_state] = new_path
     util.raiseNotDefined()
 
 

@@ -140,6 +140,7 @@ def breadthFirstSearch(problem):
                     queue_state.push(new_coordinate)
     return path
 
+
 class ExtendedPriorotyQueue(util.PriorityQueue):
     
     def __init__(self):
@@ -154,6 +155,8 @@ class ExtendedPriorotyQueue(util.PriorityQueue):
             if i == item:
                 return cost
         return 0
+
+
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     initial_state = problem.getStartState()

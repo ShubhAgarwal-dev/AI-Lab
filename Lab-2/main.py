@@ -2,7 +2,7 @@ from typing import Union, List, Tuple
 from pathlib import Path
 
 
-def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
+
     state = []
     with open(file, 'r') as file1:
         content = file1.readlines()

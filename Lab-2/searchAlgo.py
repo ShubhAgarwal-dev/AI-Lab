@@ -18,6 +18,7 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> bool:
         max_heu = max(heuristic_vals)
         if max_heu > current_node_heu:
             current_node = successors[heuristic_vals.index(max_heu)]
+            current_node_heu = max_heu
         else:
             return False
     return True
@@ -40,6 +41,7 @@ def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, 
         if max_heu > current_node_heu:
             count += 1
             current_node = successors[heuristic_vals.index(max_heu)]
+            current_node_heu = max_heu
         else:
             return (count, False)
     return (count, True)

@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -19,6 +19,7 @@ Pacman agents (in searchAgents.py).
 
 import util
 import heapq
+
 
 class SearchProblem:
     """
@@ -71,7 +72,8 @@ def tinyMazeSearch(problem):
     from game import Directions
     s = Directions.SOUTH
     w = Directions.WEST
-    return  [s, s, w, s, w, w, s, w]
+    return [s, s, w, s, w, w, s, w]
+
 
 def depthFirstSearch(problem):
     """
@@ -88,9 +90,9 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
 
-    stack = util.Stack() # stack will include coordinates and path
+    stack = util.Stack()  # stack will include coordinates and path
     visited = []
-    path = [] # list of the directions agent is required to take
+    path = []  # list of the directions agent is required to take
     initial_state = problem.getStartState()
     stack.push((initial_state, []))
 
@@ -112,6 +114,7 @@ def depthFirstSearch(problem):
 
     return path
 
+
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     queue_path = util.Queue()
@@ -124,7 +127,7 @@ def breadthFirstSearch(problem):
 
     while True:
         if queue_state.isEmpty():
-            return [] # represents failed state
+            return []  # represents failed state
         selected_state = queue_state.pop()
         path = queue_path.pop()
         visited.append(selected_state)
@@ -142,7 +145,7 @@ def breadthFirstSearch(problem):
 
 
 class ExtendedPriorotyQueue(util.PriorityQueue):
-    
+
     def __init__(self):
         util.PriorityQueue.__init__(self)
 
@@ -162,12 +165,12 @@ def uniformCostSearch(problem):
     initial_state = problem.getStartState()
     frontier = ExtendedPriorotyQueue()
     frontier.push(initial_state, 0)
-    path_dic = {initial_state:[]}
-    explored =[]
+    path_dic = {initial_state: []}
+    explored = []
     while True:
         if frontier.isEmpty():
-            return [] 
-        sel_state, cost= frontier.pop_new()
+            return []
+        sel_state, cost = frontier.pop_new()
         explored.append(sel_state)
         path = path_dic.pop(sel_state)
         if problem.isGoalState(sel_state):
@@ -180,13 +183,14 @@ def uniformCostSearch(problem):
                 new_cost = cost + add_cost
                 if new_state not in explored and new_state not in path_dic.keys():
                     frontier.push(new_state, new_cost)
-                    path_dic.update({new_state:new_path})
+                    path_dic.update({new_state: new_path})
                 elif new_state in path_dic.keys():
                     old_cost = frontier.get_cost(new_state)
                     if old_cost > new_cost:
                         frontier.update(new_state, new_cost)
                         path_dic[new_state] = new_path
     util.raiseNotDefined()
+
 
 def nullHeuristic(state, problem=None):
     """
@@ -195,17 +199,18 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
+
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     initial_state = problem.getStartState()
     frontier = ExtendedPriorotyQueue()
     frontier.push(initial_state, heuristic(initial_state, problem))
-    path_dic = {initial_state:[]}
+    path_dic = {initial_state: []}
     explored = []
     while True:
         if frontier.isEmpty():
-            return [] 
-        sel_state, cost= frontier.pop_new()
+            return []
+        sel_state, cost = frontier.pop_new()
         explored.append(sel_state)
         path = path_dic.pop(sel_state)
         if problem.isGoalState(sel_state):
@@ -216,10 +221,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             for child in successors:
                 new_state, new_dir, add_cost = child
                 new_path = path + [new_dir]
-                new_cost = cost + add_cost + heuristic(new_state, problem) - old_heu
+                new_cost = cost + add_cost + \
+                    heuristic(new_state, problem) - old_heu
                 if new_state not in explored and new_state not in path_dic.keys():
                     frontier.push(new_state, new_cost)
-                    path_dic.update({new_state:new_path})
+                    path_dic.update({new_state: new_path})
                     # print(frontier.heap[i][2] for i in range(len(frontier.heap)))
                 elif new_state in path_dic.keys():
                     old_cost = frontier.get_cost(new_state)

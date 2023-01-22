@@ -1,6 +1,3 @@
-%% Based on a TeXnicCenter-Template by Gyorgy SZEIDL.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %------------------------------------------------------------
 %
 \documentclass[a4paper,12pt,reqno,oneside]{amsart}
@@ -42,6 +39,7 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amssymb}
+\usepackage{amsmath,amsthm}
 %------------------------------------------------------------
 % Theorem like environments
 %
@@ -82,17 +80,17 @@
 \email[Saksham]{210010046@iitdh.ac.in}%
 %\urladdr{http://www.authortwo.uni-atwo.hu}
 
-\author{Abhiram}
-\email[A.~Three]{author-three@authorthree-inst.edu}%
+\author{Abhiram K}
+\email[Abhiram]{210150001@iitdh.ac.in}%
 
-\author{Rishikesh}
-\email[A.~Three]{author-three@authorthree-inst.edu}%
+\author{Rishabh Sharad}
+\email[Rishabh]{210020036@iitdh.ac.in}%
 
 %\thanks{Thanks for Author One.}
 %\thanks{Thanks for Author Two.}
 \thanks{This paper is in final form}
 \date{\today}
-\subjclass{2023 Mathematics for Data Science, CSXXX} %
+\subjclass{2023 Mathematics for Data Science, CS-427} %
 %\keywords{Keyword one, keyword two etc.}%
 %\begin{abstract}
 %This is a sample document which shows the most important features of the AMS Journal
@@ -100,10 +98,16 @@
 %\end{abstract}
 \maketitle
 
+\section{Rank Nullity Theorem}
+It is also called then fundamental theorem of Linear Maps because of its importance
+in linear transformation.
+
+\subsection{Stating and Proof}
+
 \begin{theorem}
-$
-	\large\textbf{Rank-Nullity Theorem} : 
-	$Suppose V is finite-dimensional and $ T \in \mathcal{L} : (V, W).$ Then range T is finite-dimensional and 
+	\textbf{Rank-Nullity Theorem:}
+	Suppose V is finite-dimensional and $T\in\mathcal{L}:(V, W).$ Then range T is 
+	finite-dimensional and 
 	\begin{center}
 		$Rank(T)$ + $Nullity(T)$ = $dim(V)$, or
 	\end{center}
@@ -112,10 +116,49 @@ $
 	\end{center}
 \end{theorem}
 
-\begin{proof}
-[Proof of the Rank-Nullity Theorem]
-Let $B$
+\begin{proof}[Proof]
+	Let $\phi_1,\phi_2,\ldots,\phi_l$ be the minimum vectors will that span $Ker(T)$, where l is the $dim(Ker(T))$.\\
+	And $v_1, v_2, \ldots, v_{n-l}$ be the vectors that will span the remaining vector space
+	$V$where, $n$ is the $dim(V)$.
+	Their linear transformation must be independent and should span the entire range of $T$ in $W$, let $dim(Range(T))$
+	be $k$.
+	\emph{We will prove this claim later}.\\
+	Then it becomes quite easy to see why the rank nullity theorem holds.
 \end{proof}
+
+	\begin{claim}
+		$w_1, w_2, \ldots, w_{n-l}$ are linearly independent and span the entire $Range(T)$.
+	\end{claim}
+	\begin{proof}[Proving Claim]
+		\\
+	\end{proof}
+
+\subsection{Applications}
+
+We can now prove that some of the mapping can not be surjective or injective.
+\begin{theorem}[A map to a smaller dimensional space is not injective]
+	Suppose $V$ and $W$ are finite-dimensional vector spaces such that $dim(V)$ and
+	\gtr $dim(W)$, then there is no injective linear mapping from $V$ to $W$.
+\end{theorem}
+
+\begin{proof}[Proof]
+	Let $T\in\mathcal{L}$:($V$, $W$). Then
+	%\begin{center}
+	%$dim(null$ $T$) = $dim(V)$ - $dim(Range (T))$ \newline
+	%$dim(null$ $T$) > $dim(V)$ - $dim(W)$ \newline
+	%$dim(null$ $T$) \geq $0$
+	%\end{center}
+	\begin{eqnarray*}
+	dim(null\,T)&=&dim(V) - dim(Range (T)) \\
+	& \geq & dim(V) - dim(W) \\
+	& > & 0
+	\end{eqnarray*}
+\end{proof}
+
+\begin{proof}[Proof]
+	
+\end{proof}
+
 %This text is a sample for a short bibliography. You can cite a book by making use of
 %the command \verb"\cite{KarelRektorys}": \cite{KarelRektorys}. Papers can be cited
 %similarly: \cite{Bertoti97}. If you want multiple citations to appear in a single set
@@ -123,7 +166,7 @@ Let $B$
 %separating each with a comma. Here is an example: \cite{Bertoti97, Szeidl2001,
 %Carlson67}.
 
-%\begin{thebibliography}{9}                                                                                                %
+%\begin{thebibliography}{9%
 %\bibitem {KarelRektorys}Rektorys, K., \textit{Variational methods in Mathematics,
 %Science and Engineering}, D. Reidel Publishing Company,
 %Dordrecht-Hollanf/Boston-U.S.A., 2th edition, 1975

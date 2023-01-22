@@ -41,7 +41,7 @@ class BlockWorldDiagram(Problem):
                 returnStack.append(block)
         return returnStack
 
-    def getPossibleSuccessors(self, stack0, stack1, stack2, index1, index2):
+    def get_valid_moves(self, stack0, stack1, stack2, index1, index2):
         successor = []
         copyStackA = []
         copyStackB = []
@@ -78,19 +78,19 @@ class BlockWorldDiagram(Problem):
         succcessor = []
         for i in range(0, 3):
             if (i == 0):
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 0, 1))
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 0, 2))
             elif (i == 1):
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 1, 0))
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 1, 2))
             elif (i == 2):
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 2, 0))
-                succcessor.append(self.getPossibleSuccessors(
+                succcessor.append(self.get_valid_moves(
                     stack0, stack1, stack2, 2, 1))
             else:
                 raise Exception("Stack Index Out of Range")

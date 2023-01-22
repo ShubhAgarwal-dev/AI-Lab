@@ -1,0 +1,67 @@
+\documentclass[a4paper,10pt,reqno,oneside]{amsart}
+
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath,amsthm}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+\hypersetup{pdftitle={AI LAB REPORT 2}}
+
+\begin{document}
+\title[Block World Domain (Greedy Approach)]{Lab-2 Report\\Group: 2}
+\author{Shubh Agarwal}
+\email[Shubh]{210020047@iitdh.ac.in}%
+\urladdr{https://shubhagarwal-dev.github.io/}
+
+\author{Saksham Chhimwal}
+\email[Saksham]{210010046@iitdh.ac.in}%
+\thanks{This paper is in final form}
+\date{\today}
+
+\maketitle
+
+\section{Domain Description}
+
+\textbf{State Space}: Our Implementation accepts the states as tuple (x, y, label) for each block in the state. 
+For example: (1, 2, C)
+
+\textbf{Start Node and End Node}: Check input.txt for initial node and goal.txt for final node. Below 
+is the graphical representation of the initial and final nodes.
+
+\begin{table}[h]
+    \begin{tabular}{ccc}
+    \textbf{}  & \textbf{}  & \textbf{}  \\
+    \textbf{F} & \textbf{}  & \textbf{}  \\
+    \textbf{B} & \textbf{A} & \textbf{}  \\
+    \textbf{E} & \textbf{D} & \textbf{C}
+    \end{tabular}
+    \caption{Initial State}
+\end{table}
+
+\begin{table}[h]
+    \begin{tabular}{ccc}
+    \textbf{B} & \textbf{C} & \textbf{} \\
+    \textbf{D} & \textbf{F} & \textbf{} \\
+    \textbf{A} & \textbf{E} & \textbf{}
+    \end{tabular}
+    \caption{Final State}
+\end{table}
+
+\textbf{MOVEGEN Algorithm}: We are using 3 stack to find the next generations. First, we will convert 
+our state representation into the \emph{stacks} (x will be stack number, y  will be index of block in that stack and label will 
+be the representation), then the top element of non empty stack is moved to other stacks. It gives us all the possible next states. 
+Now each possible state is converted back to tuple representation from stack representation. We are using 
+\emph{Hill Climb(\textbf{Greedy})} approach to find the solution using one of the four heuristics:
+\begin{itemize}
+    \item Manhattam Distance Heuristic
+    \item XNOR Heuristic
+    \item XNOR-height Heuristic
+    \item ASCII-Code Heuristic
+\end{itemize}
+
+\textbf{GOALTEST Algorithm}: It is just a simple comparision test, simple 
+compairing given\_state and goal\_state.
+
+\section{Heuristic Functions Considered}
+
+\end{document}

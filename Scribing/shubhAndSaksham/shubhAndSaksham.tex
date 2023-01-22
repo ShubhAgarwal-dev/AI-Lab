@@ -109,18 +109,18 @@ in linear transformation.
 	Suppose V is finite-dimensional and $T\in\mathcal{L}:(V, W).$ Then range T is 
 	finite-dimensional and 
 	\begin{center}
-		$Rank(T)$ + $Nullity(T)$ = $dim(V)$, or
+		$Rank(T)$ + $Nullity(T)$ = $\dim(V)$, or
 	\end{center}
 	\begin{center}
-		$dim(Range(T))$ + $dim(Ker(T))$ = $dim(V)$
+		$\dim(Range(T))$ + $\dim(Ker(T))$ = $\dim(V)$
 	\end{center}
 \end{theorem}
 
 \begin{proof}[Proof]
-	Let $\phi_1,\phi_2,\ldots,\phi_l$ be the minimum vectors will that span $Ker(T)$, where l is the $dim(Ker(T))$.\\
+	Let $\phi_1,\phi_2,\ldots,\phi_l$ be the minimum vectors will that span $Ker(T)$, where l is the $\dim(Ker(T))$.\\
 	And $v_1, v_2, \ldots, v_{n-l}$ be the vectors that will span the remaining vector space
-	$V$where, $n$ is the $dim(V)$.
-	Their linear transformation must be independent and should span the entire range of $T$ in $W$, let $dim(Range(T))$
+	$V$where, $n$ is the $\dim(V)$.
+	Their linear transformation must be independent and should span the entire range of $T$ in $W$, let $\dim(Range(T))$
 	be $k$.
 	\emph{We will prove this claim later}.\\
 	Then it becomes quite easy to see why the rank nullity theorem holds.
@@ -137,20 +137,20 @@ in linear transformation.
 
 We can now prove that some of the mapping can not be surjective or injective.
 \begin{theorem}[A map to a smaller dimensional space is not injective]
-	Suppose $V$ and $W$ are finite-dimensional vector spaces such that $dim(V)$ and
-	\gtr $dim(W)$, then there is no injective linear mapping from $V$ to $W$.
+	Suppose $V$ and $W$ are finite-dimensional vector spaces such that $\dim(V)$ and
+	\gtr $\dim(W)$, then there is no injective linear mapping from $V$ to $W$.
 \end{theorem}
 
 \begin{proof}[Proof]
 	Let $T\in\mathcal{L}$:($V$, $W$). Then
 	%\begin{center}
-	%$dim(null$ $T$) = $dim(V)$ - $dim(Range (T))$ \newline
-	%$dim(null$ $T$) > $dim(V)$ - $dim(W)$ \newline
-	%$dim(null$ $T$) \geq $0$
+	%$\dim(null$ $T$) = $\dim(V)$ - $\dim(Range (T))$ \newline
+	%$\dim(null$ $T$) > $\dim(V)$ - $\dim(W)$ \newline
+	%$\dim(null$ $T$) \geq $0$
 	%\end{center}
 	\begin{eqnarray*}
-	dim(null\,T)&=&dim(V) - dim(Range (T)) \\
-	& \geq & dim(V) - dim(W) \\
+	\dim(null\,T)&=&\dim(V) - \dim(Range (T)) \\
+	& \geq & \dim(V) - \dim(W) \\
 	& > & 0
 	\end{eqnarray*}
 \end{proof}

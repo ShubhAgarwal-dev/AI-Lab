@@ -33,18 +33,19 @@ class BlockWorldDiagram(Problem):
     def __init__(self, start_state: List[Tuple[int, int, str]],
                  final_state: List[Tuple[int, int, str]]):
         super().__init__(start_state, final_state)
-
+        
     def get_successor(self, state):
+        # A function that returns all possible successor states.
         stack1 = []
         stack2 = []
         stack3 = []
-        for x in state:
-            if (x[0] == 0):
-                stack1.append(x)
-            elif (x[0] == 1):
-                stack2.append(x)
-            elif (x[0] == 2):
-                stack3.append(x)
+        for block in state:
+            if (block[0] == 0):
+                stack1.append(block)
+            elif (block[0] == 1):
+                stack2.append(block)
+            elif (block[0] == 2):
+                stack3.append(block)
             else:
                 Exception("Stack Out of Range")
         successor = []
@@ -82,4 +83,48 @@ class BlockWorldDiagram(Problem):
                         stack3.append(stack2.pop())
         return successor
 
-# definig heuristics
+# defining heuristics
+
+def manhattan_heuristic(initial_state: List[Tuple[int, int, str]],
+                        final_state: List[Tuple[int, int, str]]) -> int:
+    return sum(abs(initial_state[i][0] - final_state[i][0]) + abs(initial_state[i][1] - final_state[i][1])
+               for i in range(len(initial_state)))
+
+
+def manhattan_heuristic_maxi(initial_state: List[Tuple[int, int, str]],
+                             final_state: List[Tuple[int, int, str]]) -> int:
+    """modifyinfg the heuristic s.t. you will maximize the output"""
+    return (-1)*manhattan_heuristic(initial_state, final_state)
+
+
+def xnor_heuristic(initial_state: List[Tuple[int, int, str]],
+                   final_state: List[Tuple[int, int, str]]) -> int:
+    sum = 0
+    for i in range(len(initial_state)):
+        if initial_state[i] == final_state[i]:
+            sum += 1
+        else:
+            sum -= 1
+    return sum
+
+
+def xnor_heuristic_modified(initial_state: List[Tuple[int, int, str]],
+                            final_state: List[Tuple[int, int, str]]) -> int:
+    sum = 0
+    for i in range(len(initial_state)):
+        if initial_state[i] == final_state[i]:
+            sum += initial_state[i][1]
+        else:
+            sum -= initial_state[i][1]
+    return sum
+
+
+def ascii_heuristic(initial_state: List[Tuple[int, int, str]],
+                    final_state: List[Tuple[int, int, str]]) -> int:
+    sum = 0
+    for i in range(len(initial_state)):
+        if initial_state[i] == final_state[i]:
+            sum += ord(initial_state[i][2].upper())
+        else:
+            sum -= ord(initial_state[i][2].upper())
+    return sum

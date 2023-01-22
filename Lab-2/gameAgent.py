@@ -30,7 +30,8 @@ class Problem:
 
 class BlockWorldDiagram(Problem):
 
-    def __init__(self, start_state, final_state):
+    def __init__(self, start_state: List[Tuple[int, int, str]],
+                 final_state: List[Tuple[int, int, str]]):
         super().__init__(start_state, final_state)
 
     def get_successor(self, state):
@@ -80,3 +81,5 @@ class BlockWorldDiagram(Problem):
                         successor.append(stack1+stack2+stack3)
                         stack3.append(stack2.pop())
         return successor
+
+# definig heuristics

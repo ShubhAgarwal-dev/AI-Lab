@@ -1,6 +1,6 @@
 from typing import Union, List, Tuple
 from pathlib import Path
-from gameAgent import BlockWorldDiagram
+from gameAgent import *
 
 
 def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
@@ -23,4 +23,10 @@ if __name__ == '__main__':
     goal_state = file_reader(r'goal.txt')
 
     prob1 = BlockWorldDiagram(initial_state, goal_state)
-    print(prob1.get_successor(initial_state))
+    succ = prob1.get_successor(initial_state)
+    for su in succ:
+        print(manhattan_heuristic_maxi(su, goal_state))
+        print(xnor_heuristic(su, goal_state))
+        print(xnor_heuristic_modified(su, goal_state))
+        print(ascii_heuristic(su, goal_state))
+        print()

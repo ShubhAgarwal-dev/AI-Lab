@@ -150,7 +150,7 @@ def ascii_heuristic(initial_state: List[Tuple[int, int, str]],
     sum = 0
     for i in range(len(initial_state)):
         if initial_state[i] == final_state[i]:
-            sum += ord(initial_state[i][2].upper())
+            sum += ord(initial_state[i][2].upper())*initial_state[i][1]
         else:
-            sum -= ord(initial_state[i][2].upper())
+            sum -= ord(initial_state[i][2].upper())*initial_state[i][1]
     return sum

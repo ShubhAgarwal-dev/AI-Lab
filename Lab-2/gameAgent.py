@@ -35,16 +35,17 @@ class BlockWorldDiagram(Problem):
         super().__init__(start_state, final_state)
         
     def get_successor(self, state):
+        # A function that returns all possible successor states.
         stack1 = []
         stack2 = []
         stack3 = []
-        for x in state:
-            if (x[0] == 0):
-                stack1.append(x)
-            elif (x[0] == 1):
-                stack2.append(x)
-            elif (x[0] == 2):
-                stack3.append(x)
+        for block in state:
+            if (block[0] == 0):
+                stack1.append(block)
+            elif (block[0] == 1):
+                stack2.append(block)
+            elif (block[0] == 2):
+                stack3.append(block)
             else:
                 Exception("Stack Out of Range")
         successor = []
@@ -123,7 +124,7 @@ def ascii_heuristic(initial_state: List[Tuple[int, int, str]],
     sum = 0
     for i in range(len(initial_state)):
         if initial_state[i] == final_state[i]:
-            sum += ord(initial_state[i][2])
+            sum += ord(initial_state[i][2].upper())
         else:
-            sum -= ord(initial_state[i][2])
+            sum -= ord(initial_state[i][2].upper())
     return sum

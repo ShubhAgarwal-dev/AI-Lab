@@ -68,6 +68,7 @@ class BlockWorldDiagram(Problem):
         topValStackA[1] = sizeCopyStackB+1
         copyStackB = copyStackB+topValStackA
         successor = [copyStackA+copyStackB+remainStack]
+        successor.sort(key=lambda x: x[2])
         return successor
 
     def get_successor(self, state):

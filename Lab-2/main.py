@@ -1,5 +1,6 @@
 from typing import Union, List, Tuple
 from pathlib import Path
+from gameAgent import BlockWorldDiagram
 
 
 def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
@@ -20,3 +21,6 @@ def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
 if __name__ == '__main__':
     initial_state = file_reader(r'input.txt')
     goal_state = file_reader(r'goal.txt')
+
+    prob1 = BlockWorldDiagram(initial_state, goal_state)
+    print(prob1.get_successor(initial_state))

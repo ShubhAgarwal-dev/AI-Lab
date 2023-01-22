@@ -18,5 +18,5 @@ def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
 
 
 if __name__ == '__main__':
-    intial_state = file_reader(r'input.txt')
+    initial_state = file_reader(r'input.txt')
     goal_state = file_reader(r'goal.txt')

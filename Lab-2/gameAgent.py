@@ -73,10 +73,14 @@ class BlockWorldDiagram(Problem):
         else:
             raise Exception("Index Out of Range")
         if (copyStackA == []):
-            return [copyStackA+copyStackB+remainStack]
+            op = copyStackA+copyStackB+remainStack
+            op.sort(key=lambda x: x[2])
+            return op
+        copyStackA.sort(key=lambda x:x[1])
+        copyStackB.sort(key=lambda x:x[1])
         sizeCopyStackB = len(copyStackB)
         topValStackA = copyStackA.pop()
-        newTup = (index2, sizeCopyStackB+1, topValStackA[2])
+        newTup = (index2, sizeCopyStackB, topValStackA[2])
         copyStackB = copyStackB+[newTup]
         successor = copyStackA+copyStackB+remainStack
         successor.sort(key=lambda x: x[2])
@@ -139,9 +143,9 @@ def xnor_heuristic_modified(initial_state: List[Tuple[int, int, str]],
     sum = 0
     for i in range(len(initial_state)):
         if initial_state[i] == final_state[i]:
-            sum += initial_state[i][1]
+            sum += (initial_state[i][1] + 1)
         else:
-            sum -= initial_state[i][1]
+            sum -= (initial_state[i][1] + 1)
     return sum
 
 

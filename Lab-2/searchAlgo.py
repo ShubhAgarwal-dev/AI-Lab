@@ -37,12 +37,14 @@ def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, 
         if problem.is_goal_state(current_node):
             break
         successors = problem.get_successor(initial_state)
+        print(successors)
         heuristic_vals = [heuristic(successor, final_state) for successor in successors]
         print(heuristic_vals)
         max_heu = max(heuristic_vals)
-        if max_heu > current_node_heu:
+        if max_heu != current_node_heu:
             count += 1
             current_node = successors[heuristic_vals.index(max_heu)]
+            print(current_node)
             current_node_heu = max_heu
         else:
             return (count, False)

@@ -20,11 +20,11 @@ def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
 
 
 if __name__ == '__main__':
-    initial_state = file_reader(r'input.txt')
-    goal_state = file_reader(r'goal.txt')
+    initial_state = file_reader(r'test\input2.txt')
+    goal_state = file_reader(r'test\goal2.txt')
 
     prob1 = BlockWorldDiagram(initial_state, goal_state)
-    succ = prob1.get_successor(initial_state)
+    # succ = prob1.get_successor(initial_state)
     # for su in succ:
     #     print(manhattan_heuristic_maxi(su, goal_state))
     #     print(xnor_heuristic(su, goal_state))
@@ -32,4 +32,4 @@ if __name__ == '__main__':
     #     print(ascii_heuristic(su, goal_state))
     #     print()
 
-    print(hillClimbMod(prob1, ascii_heuristic))
+    print(hillClimbMod(prob1, xnor_heuristic_modified))

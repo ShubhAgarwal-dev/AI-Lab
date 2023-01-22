@@ -25,5 +25,8 @@
     "workbench.colorCustomizations": {
         "editorError.foreground": "#ff000000",
         "editorError.background": "#00ff0000"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
     }
 }

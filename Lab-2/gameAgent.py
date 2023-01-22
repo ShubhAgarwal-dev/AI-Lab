@@ -33,55 +33,69 @@ class BlockWorldDiagram(Problem):
     def __init__(self, start_state: List[Tuple[int, int, str]],
                  final_state: List[Tuple[int, int, str]]):
         super().__init__(start_state, final_state)
-        
+
+    def makeStack(self, state, index):
+        returnStack = []
+        for block in state:
+            if (block[0] == index):
+                returnStack.append(block)
+        return returnStack
+
+    def getPossibleSuccessors(self, stack0, stack1, stack2, index1, index2):
+        successor = []
+        copyStackA = []
+        copyStackB = []
+        remainStack = []
+        if (index1 == 0 and index2 == 1):
+            copyStackA = stack0
+            copyStackB = stack1
+            remainStack = stack2
+        elif (index1 == 0 and index2 == 2):
+            copyStackA = stack0
+            copyStackB = stack2
+            remainStack = stack1
+        elif (index1 == 1 and index2 == 2):
+            copyStackA = stack1
+            copyStackB = stack2
+            remainStack = stack0
+        else:
+            raise Exception("Index Out of Range")
+        if (copyStackA == []):
+            return [copyStackA+copyStackB+remainStack]
+        sizeCopyStackB = len(copyStackB)
+        topValStackA = copyStackA.pop()
+        topValStackA[0] = index2
+        topValStackA[1] = sizeCopyStackB+1
+        copyStackB = copyStackB+topValStackA
+        successor = [copyStackA+copyStackB+remainStack]
+        return successor
+
     def get_successor(self, state):
         # A function that returns all possible successor states.
-        stack1 = []
-        stack2 = []
-        stack3 = []
-        for block in state:
-            if (block[0] == 0):
-                stack1.append(block)
-            elif (block[0] == 1):
-                stack2.append(block)
-            elif (block[0] == 2):
-                stack3.append(block)
-            else:
-                Exception("Stack Out of Range")
-        successor = []
+        stack0 = self.makeStack(state, 0)
+        stack1 = self.makeStack(state, 1)
+        stack2 = self.makeStack(state, 2)
+        succcessor = []
         for i in range(0, 3):
-            if (i == 0 and len(stack1) != 0):
-                for j in range(0, 2):
-                    if (j == 0):
-                        stack2.append(stack1.pop())  # updating the new stack
-                        successor.append(stack1+stack2+stack3)
-                        # resetting the original stack
-                        stack1.append(stack2.pop())
-                    if (j == 1):
-                        stack3.append(stack1.pop())
-                        successor.append(stack1+stack2+stack3)
-                        stack1.append(stack3.pop())
-            if (i == 1 and len(stack2) != 0):
-                for j in range(0, 2):
-                    if (j == 0):
-                        stack1.append(stack2.pop())
-                        successor.append(stack1+stack2+stack3)
-                        stack2.append(stack1.pop())
-                    if (j == 1):
-                        stack3.append(stack2.pop())
-                        successor.append(stack1+stack2+stack3)
-                        stack2.append(stack3.pop())
-            if (i == 2 and len(stack3) != 0):
-                for j in range(0, 2):
-                    if (j == 0):
-                        stack1.append(stack3.pop())
-                        successor.append(stack1+stack2+stack3)
-                        stack3.append(stack1.pop())
-                    if (j == 1):
-                        stack2.append(stack3.pop())
-                        successor.append(stack1+stack2+stack3)
-                        stack3.append(stack2.pop())
-        return successor
+            if (i == 0):
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 0, 1))
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 0, 2))
+            elif (i == 1):
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 1, 0))
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 1, 2))
+            elif (i == 2):
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 2, 0))
+                succcessor.append(self.getPossibleSuccessors(
+                    stack0, stack1, stack2, 2, 1))
+            else:
+                raise Exception("Stack Index Out of Range")
+        return succcessor
+
 
 # defining heuristics
 

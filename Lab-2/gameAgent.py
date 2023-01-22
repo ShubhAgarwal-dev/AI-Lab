@@ -30,5 +30,8 @@ class Problem:
 
 class BlockWorldDiagram(Problem):
 
-    def __init__(self, start_state, final_state):
+    def __init__(self, start_state: List[Tuple[int, int, str]],
+                 final_state: List[Tuple[int, int, str]]):
         super().__init__(start_state, final_state)
+
+# definig heuristics

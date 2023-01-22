@@ -47,27 +47,38 @@ class BlockWorldDiagram(Problem):
         copyStackB = []
         remainStack = []
         if (index1 == 0 and index2 == 1):
-            copyStackA = stack0
-            copyStackB = stack1
-            remainStack = stack2
+            copyStackA += stack0
+            copyStackB += stack1
+            remainStack += stack2
+        elif (index1 == 1 and index2 == 0):
+            copyStackA += stack1
+            copyStackB += stack0
+            remainStack += stack2
         elif (index1 == 0 and index2 == 2):
-            copyStackA = stack0
-            copyStackB = stack2
-            remainStack = stack1
+            copyStackA += stack0
+            copyStackB += stack2
+            remainStack += stack1
+        elif (index1 == 2 and index2 == 0):
+            copyStackA += stack2
+            copyStackB += stack0
+            remainStack += stack1
         elif (index1 == 1 and index2 == 2):
-            copyStackA = stack1
-            copyStackB = stack2
-            remainStack = stack0
+            copyStackA += stack1
+            copyStackB += stack2
+            remainStack += stack0
+        elif (index1 == 2 and index2 == 1):
+            copyStackA += stack2
+            copyStackB += stack1
+            remainStack += stack0
         else:
             raise Exception("Index Out of Range")
         if (copyStackA == []):
             return [copyStackA+copyStackB+remainStack]
         sizeCopyStackB = len(copyStackB)
         topValStackA = copyStackA.pop()
-        topValStackA[0] = index2
-        topValStackA[1] = sizeCopyStackB+1
-        copyStackB = copyStackB+topValStackA
-        successor = [copyStackA+copyStackB+remainStack]
+        newTup = (index2, sizeCopyStackB+1, topValStackA[2])
+        copyStackB = copyStackB+[newTup]
+        successor = copyStackA+copyStackB+remainStack
         successor.sort(key=lambda x: x[2])
         return successor
 

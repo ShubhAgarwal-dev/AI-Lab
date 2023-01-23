@@ -19,9 +19,17 @@ def decoder(state_stack:List[List[str]]) -> List[Tuple[int, int, str]]:
 
 def moveGen(state:List[Tuple[int, int, str]]) -> List[List[Tuple[int, int, str]]]:
     state_stacks = encoder(state)
-    for tower in state_stacks:
-        pass
-    pass
+    new_states = []
+    for i, tower in enumerate(state_stacks):
+        if len(tower) != 0:
+            top_block = tower.pop()
+            for j in range(len(state_stacks)):
+                if i != j:
+                    state_stacks[j].append(top_block)
+                    new_states.append(decoder(state_stacks))
+                    state_stacks[j].pop()
+            state_stacks[i].append(top_block)
+    return new_states
 
 @dataclass
 class Problem:

@@ -23,7 +23,12 @@ if __name__ == '__main__':
     initial_state = file_reader(r'test\input2.txt')
     goal_state = file_reader(r'test\goal2.txt')
 
-    prob1 = BlockWorldDiagram(initial_state, goal_state)
+    print(initial_state) 
+    stacks = encoder(initial_state)
+    print(stacks)
+    print(decoder(stacks))
+
+    # prob1 = BlockWorldDiagram(initial_state, goal_state)
     # succ = prob1.get_successor(initial_state)
     # for su in succ:
     #     print(manhattan_heuristic_maxi(su, goal_state))
@@ -32,4 +37,4 @@ if __name__ == '__main__':
     #     print(ascii_heuristic(su, goal_state))
     #     print()
 
-    print(hillClimbMod(prob1, xnor_heuristic_modified))
+    # print(hillClimbMod(prob1, xnor_heuristic_modified))

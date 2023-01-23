@@ -1,6 +1,21 @@
 from dataclasses import dataclass
 from typing import Tuple, List
 
+def encoder(state:List[Tuple[int, int, str]]) -> List[List[str]]:
+    state_stack = [[],[],[]]
+    state.sort(key=lambda x:(len(state) + 2)*x[0]+x[1])
+    for x in state:
+        state_stack[x[0]].append(x[2])
+    state.sort(key=lambda x:x[2])
+    return state_stack
+
+def decoder(state_stack:List[List[str]]) -> List[Tuple[int, int, str]]:
+    state = []
+    for i, tower in enumerate(state_stack):
+        for j, label in enumerate(tower):
+            state.append((i, j, label))
+    state.sort(key=lambda x:x[2])
+    return state
 
 @dataclass
 class Problem:

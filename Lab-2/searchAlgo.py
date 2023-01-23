@@ -14,7 +14,8 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> bool:
         if problem.is_goal_state(current_node):
             break
         successors = problem.get_successor(initial_state)
-        heuristic_vals = [heuristic(successor, final_state) for successor in successors]
+        heuristic_vals = [heuristic(successor, final_state)
+                          for successor in successors]
         max_heu = max(heuristic_vals)
         if max_heu > current_node_heu:
             current_node = successors[heuristic_vals.index(max_heu)]
@@ -22,6 +23,7 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> bool:
         else:
             return False
     return True
+
 
 def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, bool]:
     """It will return if the end_goal is rechable or not using 
@@ -37,7 +39,8 @@ def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, 
         if problem.is_goal_state(current_node):
             break
         successors = problem.get_successor(initial_state)
-        heuristic_vals = [heuristic(successor, final_state) for successor in successors]
+        heuristic_vals = [heuristic(successor, final_state)
+                          for successor in successors]
         print(heuristic_vals)
         max_heu = max(heuristic_vals)
         if max_heu > current_node_heu:

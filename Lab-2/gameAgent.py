@@ -2,6 +2,31 @@ from dataclasses import dataclass
 from typing import Tuple, List
 
 
+def encoder(state: List[Tuple[int, int, str]]) -> List[List[str]]:
+    state_stack = [[], [], []]
+    state.sort(key=lambda x: (len(state) + 2)*x[0]+x[1])
+    for x in state:
+        state_stack[x[0]].append(x[2])
+    state.sort(key=lambda x: x[2])
+    return state_stack
+
+
+def decoder(state_stack: List[List[str]]) -> List[Tuple[int, int, str]]:
+    state = []
+    for i, tower in enumerate(state_stack):
+        for j, label in enumerate(tower):
+            state.append((i, j, label))
+    state.sort(key=lambda x: x[2])
+    return state
+
+
+def moveGen(state: List[Tuple[int, int, str]]) -> List[List[Tuple[int, int, str]]]:
+    state_stacks = encoder(state)
+    for tower in state_stacks:
+        pass
+    pass
+
+
 @dataclass
 class Problem:
     """Extend this class to make a problem"""
@@ -73,7 +98,11 @@ class BlockWorldDiagram(Problem):
         else:
             raise Exception("Index Out of Range")
         if (copyStackA == []):
-            return copyStackA+copyStackB+remainStack
+            op = copyStackA+copyStackB+remainStack
+            op.sort(key=lambda x: x[2])
+            return op
+        copyStackA.sort(key=lambda x: x[1])
+        copyStackB.sort(key=lambda x: x[1])
         sizeCopyStackB = len(copyStackB)
         topValStackA = copyStackA.pop()
         newTup = (index2, sizeCopyStackB, topValStackA[2])
@@ -139,9 +168,9 @@ def xnor_heuristic_modified(initial_state: List[Tuple[int, int, str]],
     sum = 0
     for i in range(len(initial_state)):
         if initial_state[i] == final_state[i]:
-            sum += initial_state[i][1]+1
+            sum += (initial_state[i][1] + 1)
         else:
-            sum -= initial_state[i][1]-1
+            sum -= (initial_state[i][1] + 1)
     return sum
 
 

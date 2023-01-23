@@ -1,7 +1,8 @@
 from typing import Union, List, Tuple, Callable
 from pathlib import Path
 from gameAgent import *
-# from searchAlgo import *
+from searchAlgo import *
+from pprint import pprint
 
 
 def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
@@ -18,7 +19,7 @@ def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
     state.sort(key=lambda x: x[2])
     return state
 
-def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, bool]:
+def hillClimbModMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, bool]:
     """It will return if the end_goal is rechable or not using 
     the current heuristics, using greedy approach, currently maximizing
     the heuristics value"""
@@ -31,15 +32,16 @@ def hillClimbMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, 
     while True:
         if problem.is_goal_state(current_node):
             break
-        successors = moveGen(initial_state)
-        print(successors)
+        successors = moveGen(current_node)
+        for succ in successors:
+            pprint(encoder(succ))
         heuristic_vals = [heuristic(successor, final_state) for successor in successors]
         print(heuristic_vals)
         max_heu = max(heuristic_vals)
         if max_heu != current_node_heu:
             count += 1
             current_node = successors[heuristic_vals.index(max_heu)]
-            print(current_node)
+            print(f'\n{encoder(current_node)}\n')
             current_node_heu = max_heu
         else:
             return (count, False)
@@ -57,5 +59,6 @@ if __name__ == '__main__':
     #     print(xnor_heuristic_modified(su, goal_state))
     #     print(ascii_heuristic(su, goal_state))
     #     print()
-
-    print(hillClimbMod(prob1, xnor_heuristic_modified))
+    print(encoder(initial_state))
+    print(hillClimbMod(prob1, manhattan_heuristic_maxi))
+    print(encoder(goal_state))

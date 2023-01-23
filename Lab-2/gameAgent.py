@@ -17,6 +17,12 @@ def decoder(state_stack:List[List[str]]) -> List[Tuple[int, int, str]]:
     state.sort(key=lambda x:x[2])
     return state
 
+def moveGen(state:List[Tuple[int, int, str]]) -> List[List[Tuple[int, int, str]]]:
+    state_stacks = encoder(state)
+    for tower in state_stacks:
+        pass
+    pass
+
 @dataclass
 class Problem:
     """Extend this class to make a problem"""

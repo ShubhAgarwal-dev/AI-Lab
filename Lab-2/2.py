@@ -180,16 +180,26 @@ if __name__ == '__main__':
 
     prob = BlockWorldDiagram(inp_state, goal_state)
 
+    import timeit
+
+    start_time = timeit.default_timer()
     count, goal_reached = hillClimb(prob, xnor_heuristic)
-    print(f"Using XNOR:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+    end_clock = timeit.default_timer()
+    print(f"Using XNOR:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\nTime Taken:{end_clock - start_time}\n")
 
+    start_time = timeit.default_timer()
     count, goal_reached = hillClimb(prob, xnor_heuristic_modified)
-    print(f"Using XNOR MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+    end_clock = timeit.default_timer()
+    print(f"Using XNOR MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\nTime Taken:{end_clock - start_time}\n")
 
+    start_time = timeit.default_timer()
     count, goal_reached = hillClimb(prob, manhattan_heuristic_mod)
-    print(f"Using MANHATTAN MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+    end_clock = timeit.default_timer()
+    print(f"Using MANHATTAN MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\nTime Taken:{end_clock - start_time}\n")
 
+    start_time = timeit.default_timer()
     count, goal_reached = hillClimb(prob, ascii_heuristic)
-    print(f"Using ASCII:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+    end_clock = timeit.default_timer()
+    print(f"Using ASCII:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\nTime Taken:{end_clock - start_time}\n")
 
     

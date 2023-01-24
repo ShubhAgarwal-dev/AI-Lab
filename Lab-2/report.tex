@@ -61,27 +61,24 @@ Now each possible state is converted back to tuple representation from stack rep
 \end{itemize}
 Pseudocode:
 \begin{lstlisting}[frame=single]
-    Initialize the stack in a 2-D Array from the List of Tuples of Blocks
-    Initialize a List for holding all possible States that can be achieved
-    For each Pile:
+    Initialize stack in a 2-D Array from the List of Tuples 
+    Initialize List holding all possible States that can be achieved
+    FOR EACH Stack:
         Get the TopBlock
-        For each Pile:
-            If Pile1 != Pile2
-                Add the TopBlock to Pile2
-                Push this State in the List of all possible states
-                Pop the TopBlock from Pile2
-        Push the TopBlock in Pile
+        FOR different Stack:
+            Add the TopBlock to Pile2
+            PUSH this state in Possible State List
+            POP the TopBlock from Pile2
+        PUSH the TopBlock in Pile
     return the List containing the possible states
 \end{lstlisting}
-
-
 
 \textbf{GOALTEST Algorithm}: It is just a simple comparision test, simple 
 comparing given\_state and goal\_state.\\
 Pseudocode:
 \begin{lstlisting}[frame=single]
     Get the currentState and the finalState
-    If currentState == finalState
+    If currentState.SORT(key=LABEL) == finalState.SORT(key=LABEL)
         return true
     return false
 \end{lstlisting}
@@ -104,14 +101,28 @@ It works as follows:
 \newline
 This heuristic was better than the \texttt{xnor$\_$heuristic} and was able to reach the GOALSTATE for some of the inputs.
 
-\subsection*{manhattan$\_$heuristic$\_$maxi}
-\begin{Huge}
-    WRITE THIS SHIT BY YOURSELF
-\end{Huge}
+\subsection*{manhattan$\_$heuristic}
+It sums the distance between block in current state and the final state. We return additive inverse of the sum
+because our hill climb maximizes the heuristic value.
 
 \subsection*{ascii$\_$heuristic}
-This heuristic uses both the manhattan$\_$heuristic$\_$maxi and multiplies it with the \texttt{ASCII} value of the block. This proved to be the most efficient heuristic
- by far. And was able to reach the GOALSTATE most of the times.
+It multiplies the height of block by the \texttt{ASCII} value of label and add it if the position of the block 
+is correct and substract if the position is incorrect.
+
+\begin{table}[h]
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Heuristic} & \textbf{Goal Reached} & \textbf{States Explored} \\ \hline
+    \textbf{XNOR}      & Flase                 & 0                        \\ \hline
+    \textbf{XNOR\_MOD} & True                  & 3                        \\ \hline
+    \textbf{MANHATTAN} & False                 & 1                        \\ \hline
+    \textbf{ASCII}     & True                  & 3                        \\ \hline
+    \end{tabular}
+    \caption{Final Results}
+\end{table}
+
+
+
 \section{Hill Climbing}
 The Hill Climbing approach works as follows:
 \begin{enumerate}
@@ -126,11 +137,22 @@ The program halts under the following conditions:
     \item If the maximum heuristic value available among the possible states is lower than the current state.
     \item If all the heuristic values are same among the possible states.
 \end{enumerate}
+\\
+\textbf{Time Taken:} We have already shared the number of steps by our heuristics, which is a good rough estimate of
+time taken by the heuristics. Time details are shared below:
 
+\begin{table}[h]
+    \begin{tabular}{|c|c|l|}
+    \hline
+    \textbf{Heuristic} & \textbf{Goal Reached} & \textbf{Time Taken(in ms)} \\ \hline
+    \textbf{XNOR}      & Flase                 & 0.0036                     \\ \hline
+    \textbf{XNOR\_MOD} & True                  & 0.132                      \\ \hline
+    \textbf{MANHATTAN} & False                 & 0.00926                    \\ \hline
+    \textbf{ASCII}     & True                  & 0.135                      \\ \hline
+    \end{tabular}
+    \caption{Time Taken}
+\end{table}
 
-
-
-Saksham you will have to read this,,, If you are a true lober then you will
-confess your true lobe for her,,,,
-\textbf{I did read and soon I surely will.}
+\textbf{Optimal Solution:}  We are effectively doing restricted \texttt{BFS}, solution if obtained will be optimal
+given the heuristics.
 \end{document}

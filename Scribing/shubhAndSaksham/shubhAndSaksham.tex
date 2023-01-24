@@ -36,6 +36,8 @@
 \usepackage{amsmath}%
 \usepackage{amsfonts}%
 \usepackage{amssymb}%
+\usepackage{tikz}
+\usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amssymb}
@@ -72,19 +74,19 @@
 \begin{document}
 \title[Short Title (for the running head)]{Full Title}
 
-\author{Shubh Agarwal}
-\email[Shubh]{210020047@iitdh.ac.in}%
-\urladdr{https://shubhagarwal-dev.github.io/}
+% \author{Shubh Agarwal}
+% \email[Shubh]{210020047@iitdh.ac.in}%
+% \urladdr{https://shubhagarwal-dev.github.io/}
 
-\author{Saksham Chhimwal}
-\email[Saksham]{210010046@iitdh.ac.in}%
-%\urladdr{http://www.authortwo.uni-atwo.hu}
+% \author{Saksham Chhimwal}
+% \email[Saksham]{210010046@iitdh.ac.in}%
+% %\urladdr{http://www.authortwo.uni-atwo.hu}
 
-\author{Abhiram K}
-\email[Abhiram]{210150001@iitdh.ac.in}%
+% \author{Abhiram K}
+% \email[Abhiram]{210150001@iitdh.ac.in}%
 
-\author{Rishabh Sharad}
-\email[Rishabh]{210020036@iitdh.ac.in}%
+% \author{Rishabh Sharad}
+% \email[Rishabh]{210020036@iitdh.ac.in}%
 
 %\thanks{Thanks for Author One.}
 %\thanks{Thanks for Author Two.}
@@ -129,9 +131,9 @@ in linear transformation.
 	\begin{claim}
 		$w_1, w_2, \ldots, w_{n-l}$ are linearly independent and span the entire $Range(T)$.
 	\end{claim}
-	\begin{proof}[Proving Claim]
-		\\
-	\end{proof}
+	% \begin{proof}[Proving Claim]
+	% 	\\
+	% \end{proof}
 
 \subsection{Applications}
 
@@ -158,6 +160,238 @@ We can now prove that some of the mapping can not be surjective or injective.
 \begin{proof}[Proof]
 	
 \end{proof}
+\section{Matrix Representation of Linear Transformation}
+A vector is represented in different ways on the coordinate system depending on what its basis is. Suppose the vector (2,1) in $R^2$ is represented with basis as 
+$\begin{pmatrix}
+    1 & 0\\
+    0 & 1
+\end{pmatrix}$
+
+
+ \begin{center}
+     \includegraphics{"figure1.jpg"}
+ \end{center}
+ 
+ But when the basis is changed the vector is represented differently and on a different basis.
+ \newline
+ The vector $V$ can be represented as $a_{1} b_{1} + a_{2} b_{2}$ and in matrix form can be represented as $V \begin{pmatrix}
+     a_{1}\\
+     a_{2}
+ \end{pmatrix}$.
+ \newline
+ Suppose there are is a linear transformation $T$ that maps a vector $V$ from $R^{n}$ to $W$ in $R^{m}$.
+ Let the basis be $B= \{e_{1},\dots ,e_{n}\}$ and $B^\prime = \{e_{1}^\prime , \dots ,e_{m}^\prime \}$
+ The map can be represented as 
+ \begin{center}
+ \centering
+ \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+  \node[ele,label=left:$e_{1}$] (a1) at (0,4) {};    
+  \node[ele,label=left:$e_{2}$] (a2) at (0,3) {};    
+  \node[ele,label=left:$ \vdots $] (a3) at (0,2) {};
+  \node[ele,label=left:$e_{n}$] (a4) at (0,1) {};
+
+  \node[ele,,label=right:$w_{1}$] (b1) at (4,4) {};
+  \node[ele,,label=right:$w_{2}$] (b2) at (4,3) {};
+  \node[ele,,label=right:$ \vdots $] (b3) at (4,2) {};
+  \node[ele,,label=right:$w_{n}$] (b4) at (4,1) {};
+
+  \node[draw,fit= (a1) (a2) (a3) (a4),minimum width=2cm] {} ;
+  \node[draw,fit= (b1) (b2) (b3) (b4),minimum width=2cm] {} ;  
+  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
+  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
+  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b3);
+  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b4);
+ \end{tikzpicture}
+ \end{center}
+Suppose the basis for $B$ is $\begin{pmatrix}
+    \alpha_{1}\\
+    \vdots \\
+    \alpha_{n}
+\end{pmatrix}$ and the upon applying the transformation the basis for $B^\prime$ is $\begin{pmatrix}
+    \beta_{1} \\
+    \vdots \\
+    \beta_{m}
+\end{pmatrix}$
+\newline
+Now the question is how should we connect $\alpha_{i}$ to the $\beta_{j}$ such that we reach to our answer.
+$$
+\begin{array}
+\\
+    & \text{ We know that } Tv = w 
+    & v = \sum_{i=1}^{n}\alpha_{i}e_{i} 
+    & \text{Applying linear transformation T on both sides we get} 
+    & Tv = \sum_{i=1}^{n}\alpha_{i}T \left( e_{i} \right) 
+    \\
+    & \text{Now what is $Te_{i}$ ?}
+    &\text{In this case $e_{i} \rightarrow{} w_{i}$} 
+    \\
+    & \therefore Tv = \sum_{i=1}^{n}\alpha_{i}w_{i}
+\end{array}
+$$
+But we want $w_{i}$ to be represented in terms of Standard Basis. \newline
+$$
+\begin{array}{cc}
+    w_{i} = \begin{pmatrix}
+        w_{1i}\\
+        w_{2i}\\
+        \vdots \\
+        w_{mi}
+    \end{pmatrix}
+    \left( \text{This is the representation of $w_{i}$ in standard basis} \right) \\
+    \therefore w_{i} = \sum_{i=1}^{m} w_{ij} e^\prime_{j}
+    \end{array}
+$$
+Hence now the $Tv$ can be transformed as follows 
+$$
+\begin{array}{cc}
+     Tv  =&  \sum_{i=1}^{n} \sum_{j=1}^{m} w_{ij} e_{j} \\
+     Tv  =& \sum_{j=1}^{m} \left( \sum_{i=1}^{n} w_{ij} \alpha_{i} \right) e^\prime_{j} \\
+     & \text{ Call the quantity } \left( \sum_{i=1}^{n} w_{ij} \alpha_{i} \right) = \beta_{j} \\
+     \therefore Tv =& \sum_{j=1}^{m}\beta_{j} e^{\prime}_{j}\\
+\end{array}
+$$
+This can now be represented in the matrix form as follows
+$$
+Tv = 
+\begin{pmatrix}
+    w_{1,1} & w_{1,2} &\cdots & w_{1,n} \\
+    \vdots & \vdots & \vdots & \vdots \\
+    w_{m,1} & w_{m,2} &\cdots & w_{m,n} 
+\end{pmatrix}
+\begin{pmatrix}
+    \alpha_{1} \\
+    \vdots \\
+    \alpha_{n}
+\end{pmatrix}
+$$
+Here we can clearly see that $Te_{i} = \left(\begin{matrix}
+        w_{1,i} \\
+        \vdots \\
+        w_{m,i}
+    \end{matrix}
+\right)
+    \text{That is the $i^{\text{th}}$ column in the matrix.}
+$
+Hence to get the first column and eventually $Te_{1}$ we must place the $\begin{pmatrix}
+    \alpha_{1} \\
+    \vdots \\
+    \alpha_{n}
+\end{pmatrix}$ equal to $\begin{pmatrix}
+    1 \\
+    0 \\
+    \vdots \\
+    0
+\end{pmatrix}$. Similarly to get the second column we must place the $\begin{pmatrix}
+    \alpha_{1} \\
+    \vdots \\
+    \alpha_{n}
+\end{pmatrix}$ equal to $\begin{pmatrix}
+    0 \\
+    1 \\
+    \vdots \\
+    0
+\end{pmatrix}$ and so on.
+\newpage
+\textbf{Example 1:} $\mathbb{R}^{2} \xrightarrow{T} \mathbb{R}^{2}$. Given 
+\\
+\begin{center}
+\begin{pmatrix}
+    1 \\
+    2
+\end{pmatrix} $\xrightarrow{T}$ \begin{pmatrix}
+    -3 \\
+    1
+\end{pmatrix}
+\\
+\begin{pmatrix}
+    -3 \\
+    1
+\end{pmatrix} $\xrightarrow{T}$ \begin{pmatrix}
+    1 \\
+    2
+\end{pmatrix}
+\end{center}
+Find the linear transformation $\begin{pmatrix}
+    \alpha_{1} \\
+    \alpha_{2}
+\end{pmatrix} \xrightarrow{T} \begin{pmatrix}
+    \beta_{1} \\
+    \beta_{2}
+\end{pmatrix}.$
+\newline
+\newline
+\textbf{Solution: }
+The first question that arises is where the standard basis goes. The vector on the LHS be in the standard basis $\left( 1,0 \right)$ and $\left( 0,1 \right)$.
+$$
+\begin{array}{cc}
+     \begin{pmatrix}
+         1 \\
+         2
+     \end{pmatrix}
+     \xrightarrow{T}
+     \begin{pmatrix}
+         -3 \\
+         1
+     \end{pmatrix}
+     \\
+     -2 \cdot \left(
+     \begin{pmatrix}
+         -3 \\
+         1
+     \end{pmatrix}
+     \xrightarrow{T}
+     \begin{pmatrix}
+         1 \\
+         2
+     \end{pmatrix}
+     \right)
+	 \\
+     = \begin{pmatrix}
+         7 \\
+         0
+     \end{pmatrix}
+     \xrightarrow{T}
+     \begin{pmatrix}
+         -5 \\
+         -3
+     \end{pmatrix}
+     \\
+     \implies \begin{pmatrix}
+         1 \\
+         0
+     \end{pmatrix}
+     \xrightarrow{T}
+     \frac{1}{7}
+     \begin{pmatrix}
+         -5 \\
+         -3
+     \end{pmatrix}
+\end{array}
+$$
+Similarly we find for the vector $\begin{pmatrix}
+    0 \\
+    1
+\end{pmatrix}$ and we get it to be $\begin{pmatrix}
+    0 \\
+    1
+\end{pmatrix} \xrightarrow{T} \frac{1}{7}\begin{pmatrix}
+    -8 \\
+    5
+\end{pmatrix}$.
+\\
+Now we know the linear transformation for both the standard basis vectors. Now we can push these values in the matrix and get the value for the corresponding $\beta$ depending on the value of $\alpha$.
+$$
+\begin{pmatrix}
+    \beta_1 \\
+    \beta_2
+\end{pmatrix} = \begin{pmatrix}
+    \frac{-5}{7} & \frac{-8}{7} \\
+    \frac{-3}{7} & \frac{5}{7}
+\end{pmatrix} \begin{pmatrix}
+    \alpha_1 \\
+    \alpha_2
+\end{pmatrix}
+$$
 
 %This text is a sample for a short bibliography. You can cite a book by making use of
 %the command \verb"\cite{KarelRektorys}": \cite{KarelRektorys}. Papers can be cited

@@ -66,79 +66,39 @@ class BlockWorldDiagram(Problem):
                 returnStack.append(block)
         return returnStack
 
-    def get_valid_moves(self, stack0, stack1, stack2, index1, index2):
-        successor = []
-        copyStackA = []
-        copyStackB = []
-        remainStack = []
-        if (index1 == 0 and index2 == 1):
-            copyStackA += stack0
-            copyStackB += stack1
-            remainStack += stack2
-        elif (index1 == 1 and index2 == 0):
-            copyStackA += stack1
-            copyStackB += stack0
-            remainStack += stack2
-        elif (index1 == 0 and index2 == 2):
-            copyStackA += stack0
-            copyStackB += stack2
-            remainStack += stack1
-        elif (index1 == 2 and index2 == 0):
-            copyStackA += stack2
-            copyStackB += stack0
-            remainStack += stack1
-        elif (index1 == 1 and index2 == 2):
-            copyStackA += stack1
-            copyStackB += stack2
-            remainStack += stack0
-        elif (index1 == 2 and index2 == 1):
-            copyStackA += stack2
-            copyStackB += stack1
-            remainStack += stack0
+    def get_valid_moves(self, allStack, index1, index2):
+        copyA = allStack[index1]
+        copyA.sort(key=lambda x: x[1])
+        copyB = allStack[index2]
+        copyB.sort(key=lambda x: x[1])
+        if (len(copyA) != 0):
+            top_value = copyA.pop()
+            new_tuple = (index2, len(copyB), top_value[2])
+            copyB.append(new_tuple)
+            newState = copyA+copyB+allStack[3-index1-index2]
+            newState.sort(key=lambda x: x[2])
         else:
-            raise Exception("Index Out of Range")
-        if (copyStackA == []):
-            op = copyStackA+copyStackB+remainStack
-            op.sort(key=lambda x: x[2])
-            return op
-        copyStackA.sort(key=lambda x: x[1])
-        copyStackB.sort(key=lambda x: x[1])
-        sizeCopyStackB = len(copyStackB)
-        topValStackA = copyStackA.pop()
-        newTup = (index2, sizeCopyStackB, topValStackA[2])
-        copyStackB = copyStackB+[newTup]
-        successor = copyStackA+copyStackB+remainStack
-        successor.sort(key=lambda x: x[2])
-        return successor
+            newState = copyA+copyB+allStack[3-index1-index2]
+            newState.sort(key=lambda x: x[2])
 
     def get_successor(self, state):
-        # A function that returns all possible successor states.
         stack0 = self.makeStack(state, 0)
         stack1 = self.makeStack(state, 1)
         stack2 = self.makeStack(state, 2)
-        succcessor = []
-        for i in range(0, 3):
-            if (i == 0):
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 0, 1))
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 0, 2))
-            elif (i == 1):
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 1, 0))
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 1, 2))
-            elif (i == 2):
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 2, 0))
-                succcessor.append(self.get_valid_moves(
-                    stack0, stack1, stack2, 2, 1))
-            else:
-                raise Exception("Stack Index Out of Range")
-        return succcessor
+        allStackList = [stack0, stack1, stack2]
+        successor = []
+        successor.append(self.get_valid_moves(allStackList, 0, 1))
+        successor.append(self.get_valid_moves(allStackList, 1, 0))
+        successor.append(self.get_valid_moves(allStackList, 2, 0))
+        successor.append(self.get_valid_moves(allStackList, 0, 2))
+        successor.append(self.get_valid_moves(allStackList, 2, 1))
+        successor.append(self.get_valid_moves(allStackList, 1, 2))
+        print(successor)
+        return successor
 
 
 # defining heuristics
+
 
 def manhattan_heuristic(initial_state: List[Tuple[int, int, str]],
                         final_state: List[Tuple[int, int, str]]) -> int:

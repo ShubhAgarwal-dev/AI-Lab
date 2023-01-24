@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt,reqno,oneside]{amsart}
 
 \usepackage{hyperref}
+\usepackage{listings}[language=Python]
 \usepackage{amssymb}
 \usepackage{amsmath,amsthm}
 \usepackage[a4paper, total={6in, 9in}]{geometry}
@@ -58,10 +59,32 @@ Now each possible state is converted back to tuple representation from stack rep
     \item XNOR-height Heuristic
     \item ASCII-Code Heuristic
 \end{itemize}
+Pseudocode:
+\begin{lstlisting}[frame=single]
+    Initialize the stack in a 2-D Array from the List of Tuples of Blocks
+    Initialize a List for holding all possible States that can be achieved
+    For each Pile:
+        Get the TopBlock
+        For each Pile:
+            If Pile1 != Pile2
+                Add the TopBlock to Pile2
+                Push this State in the List of all possible states
+                Pop the TopBlock from Pile2
+        Push the TopBlock in Pile
+    return the List containing the possible states
+\end{lstlisting}
+
+
 
 \textbf{GOALTEST Algorithm}: It is just a simple comparision test, simple 
-comparing given\_state and goal\_state.
-
+comparing given\_state and goal\_state.\\
+Pseudocode:
+\begin{lstlisting}[frame=single]
+    Get the currentState and the finalState
+    If currentState == finalState
+        return true
+    return false
+\end{lstlisting}
 \section{Heuristic Functions Considered}
 \subsection*{\texttt{xnor$\_$heuristic}}
 This heuristic is the one basic heuristic discussed in class. This gives a value \textbf{+1}

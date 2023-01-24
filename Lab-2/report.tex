@@ -47,11 +47,11 @@ is the graphical representation of the initial and final nodes.
     \caption{Final State}
 \end{table}
 
-\textbf{MOVEGEN Algorithm}: We are using 3 stack to find the next generations. First, we will convert 
-our state representation into the \emph{stacks} (x will be stack number, y  will be index of block in that stack and label will 
+\textbf{MOVEGEN Algorithm}: We are using 3 \texttt{stack} to find the next generations. First, we will convert 
+our state representation into the \texttt{stacks} (x will be stack number, y  will be index of block in that stack and label will 
 be the representation), then the top element of non empty stack is moved to other stacks. It gives us all the possible next states. 
 Now each possible state is converted back to tuple representation from stack representation. We are using 
-\emph{Hill Climb(\textbf{Greedy})} approach to find the solution using one of the four heuristics:
+\texttt{Hill Climb(\textbf{Greedy})} approach to find the solution using one of the four heuristics:
 \begin{itemize}
     \item Manhattam Distance Heuristic
     \item XNOR Heuristic
@@ -60,12 +60,54 @@ Now each possible state is converted back to tuple representation from stack rep
 \end{itemize}
 
 \textbf{GOALTEST Algorithm}: It is just a simple comparision test, simple 
-compairing given\_state and goal\_state.
+comparing given\_state and goal\_state.
 
 \section{Heuristic Functions Considered}
+\subsection*{\texttt{xnor$\_$heuristic}}
+This heuristic is the one basic heuristic discussed in class. This gives a value \textbf{+1}
+to the blocks that are on the correct position w.r.t to the GOALSTATE. And assigns a value of 
+\textbf{-1} to the ones that are on the incorrect position w.r.t the GOALSTATE.
+\newline
+This heuristic has a high possibility of getting stuck and was not able to reach the GOALSTATE many a times.
+
+\subsection*{\texttt{xnor$\_$heuristic$\_$modified}}
+This heuristic combines the xnor$\_$heuristic with height.
+It works as follows:
+\begin{enumerate}
+    \item If the item is at the correct position and has a height \texttt{h} then it will assign it a value of \texttt{+h}
+    \item If the item is not at the correct position and has a height \texttt{h} then it will assign it a value of \texttt{-h}.
+    \item The height starts form 1 at the bottom of the stack. That is the lowest block has a height of \texttt{1}.
+\end{enumerate}
+\newline
+This heuristic was better than the \texttt{xnor$\_$heuristic} and was able to reach the GOALSTATE for some of the inputs.
+
+\subsection*{manhattan$\_$heuristic$\_$maxi}
+\begin{Huge}
+    WRITE THIS SHIT BY YOURSELF
+\end{Huge}
+
+\subsection*{ascii$\_$heuristic}
+This heuristic uses both the manhattan$\_$heuristic$\_$maxi and multiplies it with the \texttt{ASCII} value of the block. This proved to be the most efficient heuristic
+ by far. And was able to reach the GOALSTATE most of the times.
 \section{Hill Climbing}
+The Hill Climbing approach works as follows:
+\begin{enumerate}
+    \item It calculates the value of the heuristic of the initial state which is being used currently by the program.
+    \item It then calculates the heuristic values for all possible state that can be reached from the current state and stores them in a list.
+    \item It chooses the state that has the highest value in the list.
+    \item If the chosen value if larger than the heuristic value of the current state then the current state is transformed into the chosen state.
+    \item This loop continues till the GOALSTATE is reached or the program halts because of indeterminism.
+\end{enumerate}
+The program halts under the following conditions:
+\begin{enumerate}
+    \item If the maximum heuristic value available among the possible states is lower than the current state.
+    \item If all the heuristic values are same among the possible states.
+\end{enumerate}
+
+
+
 
 Saksham you will have to read this,,, If you are a true lober then you will
 confess your true lobe for her,,,,
-
+\textbf{I did read and soon I surely will.}
 \end{document}

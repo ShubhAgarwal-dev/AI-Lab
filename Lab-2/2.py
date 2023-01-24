@@ -155,7 +155,7 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, boo
         successors = problem.get_successor(current_node)
         heuristic_vals = [heuristic(successor, final_state) for successor in successors]
         max_heu = max(heuristic_vals)
-        print(heuristic_vals)
+        # print(heuristic_vals)
         # for suc in successors:
             # print(encoder(suc))
         if max_heu > current_node_heu:
@@ -180,7 +180,16 @@ if __name__ == '__main__':
 
     prob = BlockWorldDiagram(inp_state, goal_state)
 
+    count, goal_reached = hillClimb(prob, xnor_heuristic)
+    print(f"Using XNOR:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+
+    count, goal_reached = hillClimb(prob, xnor_heuristic_modified)
+    print(f"Using XNOR MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+
+    count, goal_reached = hillClimb(prob, manhattan_heuristic_mod)
+    print(f"Using MANHATTAN MODIFIED:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
+
     count, goal_reached = hillClimb(prob, ascii_heuristic)
-    print(f"Goal Reached:{goal_reached}\nTotal Number of sates explored:{count}")
+    print(f"Using ASCII:\nGoal Reached:{goal_reached}\nTotal Number of sates explored:{count}\n")
 
     

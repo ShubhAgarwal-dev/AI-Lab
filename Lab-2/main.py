@@ -1,7 +1,8 @@
-from typing import Union, List, Tuple
+from typing import Union, List, Tuple, Callable
 from pathlib import Path
 from gameAgent import *
 from searchAlgo import *
+from pprint import pprint
 
 
 def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
@@ -18,17 +19,39 @@ def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
     state.sort(key=lambda x: x[2])
     return state
 
+def hillClimbModMod(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, bool]:
+    """It will return if the end_goal is rechable or not using 
+    the current heuristics, using greedy approach, currently maximizing
+    the heuristics value"""
+    initial_state = problem.get_initial_state()
+    final_state = problem.get_goal_state()
+    current_node = initial_state
+    current_node_heu = heuristic(current_node, final_state)
+    print(current_node_heu)
+    count = 0
+    while True:
+        if problem.is_goal_state(current_node):
+            break
+        successors = moveGen(current_node)
+        for succ in successors:
+            pprint(encoder(succ))
+        heuristic_vals = [heuristic(successor, final_state) for successor in successors]
+        print(heuristic_vals)
+        max_heu = max(heuristic_vals)
+        if max_heu != current_node_heu:
+            count += 1
+            current_node = successors[heuristic_vals.index(max_heu)]
+            print(f'\n{encoder(current_node)}\n')
+            current_node_heu = max_heu
+        else:
+            return (count, False)
+    return (count, True)
 
 if __name__ == '__main__':
     initial_state = file_reader(r'test\input2.txt')
     goal_state = file_reader(r'test\goal2.txt')
 
-    print(initial_state) 
-    stacks = encoder(initial_state)
-    print(stacks)
-    print(decoder(stacks))
-
-    # prob1 = BlockWorldDiagram(initial_state, goal_state)
+    prob1 = BlockWorldDiagram(initial_state, goal_state)
     # succ = prob1.get_successor(initial_state)
     # for su in succ:
     #     print(manhattan_heuristic_maxi(su, goal_state))
@@ -36,5 +59,6 @@ if __name__ == '__main__':
     #     print(xnor_heuristic_modified(su, goal_state))
     #     print(ascii_heuristic(su, goal_state))
     #     print()
-
-    # print(hillClimbMod(prob1, xnor_heuristic_modified))
+    print(encoder(initial_state))
+    print(hillClimbMod(prob1, manhattan_heuristic_maxi))
+    print(encoder(goal_state))

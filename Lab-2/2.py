@@ -1,5 +1,21 @@
+from typing import List, Tuple, Union, Callable
+from pathlib import Path
 from dataclasses import dataclass
-from typing import Tuple, List
+
+
+def file_reader(file: Union[str, Path]) -> List[Tuple[int, int, str]]:
+    state = []
+    with open(file, 'r') as file1:
+        content = file1.readlines()
+
+    for line in content:
+        line = line.strip('\n')
+        line = line.split(" ")
+        block = (int(line[0]), int(line[1]), line[2])
+        state.append(block)
+
+    state.sort(key=lambda x: x[2])
+    return state
 
 
 def encoder(state: List[Tuple[int, int, str]]) -> List[List[str]]:
@@ -18,21 +34,6 @@ def decoder(state_stack: List[List[str]]) -> List[Tuple[int, int, str]]:
             state.append((i, j, label))
     state.sort(key=lambda x: x[2])
     return state
-
-
-def moveGen(state: List[Tuple[int, int, str]]) -> List[List[Tuple[int, int, str]]]:
-    state_stacks = encoder(state)
-    new_states = []
-    for i, tower in enumerate(state_stacks):
-        if len(tower) != 0:
-            top_block = tower.pop()
-            for j in range(len(state_stacks)):
-                if i != j:
-                    state_stacks[j].append(top_block)
-                    new_states.append(decoder(state_stacks))
-                    state_stacks[j].pop()
-            state_stacks[i].append(top_block)
-    return new_states
 
 
 @dataclass
@@ -74,39 +75,22 @@ class BlockWorldDiagram(Problem):
                 returnStack.append(block)
         return returnStack
 
-    def get_valid_moves(self, allStack, index1, index2):
-        copyA = allStack[index1]
-        copyA.sort(key=lambda x: x[1])
-        copyB = allStack[index2]
-        copyB.sort(key=lambda x: x[1])
-        if (len(copyA) != 0):
-            top_value = copyA.pop()
-            new_tuple = (index2, len(copyB), top_value[2])
-            copyB.append(new_tuple)
-            newState = copyA+copyB+allStack[3-index1-index2]
-            newState.sort(key=lambda x: x[2])
-        else:
-            newState = copyA+copyB+allStack[3-index1-index2]
-            newState.sort(key=lambda x: x[2])
-
-    def get_successor(self, state):
-        stack0 = self.makeStack(state, 0)
-        stack1 = self.makeStack(state, 1)
-        stack2 = self.makeStack(state, 2)
-        allStackList = [stack0, stack1, stack2]
-        successor = []
-        successor.append(self.get_valid_moves(allStackList, 0, 1))
-        successor.append(self.get_valid_moves(allStackList, 1, 0))
-        successor.append(self.get_valid_moves(allStackList, 2, 0))
-        successor.append(self.get_valid_moves(allStackList, 0, 2))
-        successor.append(self.get_valid_moves(allStackList, 2, 1))
-        successor.append(self.get_valid_moves(allStackList, 1, 2))
-        print(successor)
-        return successor
+    def get_successor(self, state: List[Tuple[int, int, str]]) -> List[List[Tuple[int, int, str]]]:
+        state_stacks = encoder(state)
+        new_states = []
+        for i, tower in enumerate(state_stacks):
+            if len(tower) != 0:
+                top_block = tower.pop()
+                for j in range(len(state_stacks)):
+                    if i != j:
+                        state_stacks[j].append(top_block)
+                        new_states.append(decoder(state_stacks))
+                        state_stacks[j].pop()
+                state_stacks[i].append(top_block)
+        return new_states
 
 
 # defining heuristics
-
 
 def manhattan_heuristic(initial_state: List[Tuple[int, int, str]],
                         final_state: List[Tuple[int, int, str]]) -> int:
@@ -153,3 +137,29 @@ def ascii_heuristic(initial_state: List[Tuple[int, int, str]],
             sum -= ord(initial_state[i][2].upper()) * \
                 abs(initial_state[i][1]-final_state[i][1])
     return sum
+
+
+def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, bool]:
+    """It will return if the end_goal is rechable or not using 
+    the current heuristics, using greedy approach, currently maximizing
+    the heuristics value"""
+    initial_state = problem.get_initial_state()
+    final_state = problem.get_goal_state()
+    current_node = initial_state
+    current_node_heu = heuristic(current_node, final_state)
+    count = 0
+    while True:
+        if problem.is_goal_state(current_node):
+            break
+        successors = problem.get_successor(current_node)
+        heuristic_vals = [heuristic(successor, final_state) for successor in successors]
+        max_heu = max(heuristic_vals)
+        if max_heu > current_node_heu:
+            count += 1
+            current_node = successors[heuristic_vals.index(max_heu)]
+            current_node_heu = max_heu
+        else:
+            return (count, False)
+    return (count, True)
+
+    

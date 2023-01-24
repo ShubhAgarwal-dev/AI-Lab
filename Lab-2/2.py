@@ -98,7 +98,7 @@ def manhattan_heuristic(initial_state: List[Tuple[int, int, str]],
                for i in range(len(initial_state)))
 
 
-def manhattan_heuristic_maxi(initial_state: List[Tuple[int, int, str]],
+def manhattan_heuristic_mod(initial_state: List[Tuple[int, int, str]],
                              final_state: List[Tuple[int, int, str]]) -> int:
     """modifyinfg the heuristic s.t. you will maximize the output"""
     return (-1)*manhattan_heuristic(initial_state, final_state)
@@ -132,10 +132,10 @@ def ascii_heuristic(initial_state: List[Tuple[int, int, str]],
     for i in range(len(initial_state)):
         if initial_state[i] == final_state[i]:
             sum += ord(initial_state[i][2].upper()) * \
-                abs((initial_state[i][1])-final_state[i][1])
+                abs(initial_state[i][1])
         else:
             sum -= ord(initial_state[i][2].upper()) * \
-                abs(initial_state[i][1]-final_state[i][1])
+                abs(initial_state[i][1])
     return sum
 
 
@@ -148,12 +148,16 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, boo
     current_node = initial_state
     current_node_heu = heuristic(current_node, final_state)
     count = 0
+    # print(current_node_heu)
     while True:
         if problem.is_goal_state(current_node):
             break
         successors = problem.get_successor(current_node)
         heuristic_vals = [heuristic(successor, final_state) for successor in successors]
         max_heu = max(heuristic_vals)
+        print(heuristic_vals)
+        # for suc in successors:
+            # print(encoder(suc))
         if max_heu > current_node_heu:
             count += 1
             current_node = successors[heuristic_vals.index(max_heu)]
@@ -161,5 +165,22 @@ def hillClimb(problem: Problem, heuristic: Callable[..., int]) -> Tuple[int, boo
         else:
             return (count, False)
     return (count, True)
+
+if __name__ == '__main__':
+    from sys import argv
+
+    inp = argv[1]
+    goal = argv[2]
+
+    # inp = r'test\ii.txt'
+    # goal = r'test\final.txt'
+
+    inp_state = file_reader(inp)
+    goal_state = file_reader(goal)
+
+    prob = BlockWorldDiagram(inp_state, goal_state)
+
+    count, goal_reached = hillClimb(prob, ascii_heuristic)
+    print(f"Goal Reached:{goal_reached}\nTotal Number of sates explored:{count}")
 
     

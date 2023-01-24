@@ -497,3 +497,4 @@ poetry.toml
 # Ignore all local history of files
 .history
 .ionide
+Lab-2/inp.py

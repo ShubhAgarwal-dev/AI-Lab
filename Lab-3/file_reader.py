@@ -12,6 +12,8 @@ def array_converter(file_loc:Union[str, Path]):
             coordinates_array[i][0], coordinates_array[i][1] = (file_content[i+2].strip()).split(" ")
         distance_array = np.zeros(shape=(num_args, num_args), dtype=np.float64)
         for i in range(num_args):
-            pass
+            dis = (file_content[i+num_args+2].strip()).strip(" ")
+            for j in range(num_args):
+                distance_array[i][j] = dis[j]
         return (dis_type, num_args, coordinates_array, distance_array)
         

@@ -22,10 +22,10 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "workbench.colorCustomizations": {
-        "editorError.foreground": "#ff000000",
-        "editorError.background": "#00ff0000"
-    },
+    // "workbench.colorCustomizations": {
+    //     "editorError.foreground": "#ff000000",
+    //     "editorError.background": "#00ff0000"
+    // },
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     }

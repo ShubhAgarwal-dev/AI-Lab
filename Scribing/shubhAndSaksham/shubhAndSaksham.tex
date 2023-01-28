@@ -444,12 +444,14 @@ $$
      \node[ele,,label=right:$w_{2}$] (b2) at (4,6) {};
      \node[ele,,label=right:$ \vdots $] (b3) at (4,5) {};
      \node[ele,,label=right:$w_{n-l}$] (b4) at (4,4) {};
+     \node[ele,,label=right:$w_{n-l+1}$] (b5) at (4,3) {};
      \node[ele,,label=right:$0$] (b5) at (4,2) {};
    
      \node[draw,fit= (a1) (a2) (a3) (a4) (a5) (a6) (a7),minimum width=2cm] {} ;
      \node[draw,fit= (b1) (b2) (b3) (b4) (b5),minimum width=2cm] {} ;  
      \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a2) -- (b1);
+     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a2) -- (b2);
+     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a4) -- (b4);
      \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
      \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
      \draw[->,thick,shorten <=2pt,shorten >=2] (a6) -- (b5);

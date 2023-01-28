@@ -204,7 +204,7 @@ $\begin{pmatrix}
 
 
  \begin{center}
-     \includegraphics{"figure1.jpg"}
+     \includegraphics{"figure1.png"}
  \end{center}
  
  But when the basis is changed the vector is represented differently and on a different basis.
@@ -428,6 +428,31 @@ $$
 \end{pmatrix}
 $$
 
+
+\begin{center}
+    \centering
+    \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+     \node[ele,label=left:$v_{1}$] (a1) at (0,7) {};    
+     \node[ele,label=left:$v_{2}$] (a2) at (0,6) {};    
+     \node[ele,label=left:$ \vdots $] (a3) at (0,5) {};
+     \node[ele,label=left:$v_{n-1}$] (a4) at (0,4) {};
+     \node[ele,label=left:$\phi_{1}$] (a5) at (0,3) {};
+     \node[ele,label=left:$\vdots$] (a6) at (0,2) {};
+     \node[ele,label=left:$\phi_{l}$] (a7) at (0,1) {};
+
+     \node[ele,,label=right:$w_{1}$] (b1) at (4,7) {};
+     \node[ele,,label=right:$w_{2}$] (b2) at (4,6) {};
+     \node[ele,,label=right:$ \vdots $] (b3) at (4,5) {};
+     \node[ele,,label=right:$w_{n-l}$] (b4) at (4,4) {};
+     \node[ele,,label=right:$0$] (b5) at (4,2) {};
+   
+     \node[draw,fit= (a1) (a2) (a3) (a4) (a5) (a6) (a7),minimum width=2cm] {} ;
+     \node[draw,fit= (b1) (b2) (b3) (b4) (b5),minimum width=2cm] {} ;  
+     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
+     \draw[->,thick,shorten <=2pt,shorten >=2] (a6) -- (b5);
+     \draw[->,thick,shorten <=2pt,shorten >=2] (a7) -- (b5);
+    \end{tikzpicture}
+    \end{center}
 %This text is a sample for a short bibliography. You can cite a book by making use of
 %the command \verb"\cite{KarelRektorys}": \cite{KarelRektorys}. Papers can be cited
 %similarly: \cite{Bertoti97}. If you want multiple citations to appear in a single set

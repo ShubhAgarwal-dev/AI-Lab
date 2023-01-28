@@ -2,6 +2,7 @@
 Lab-1/search/result.txt
 *.zip
 *.token
+*.tmp
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

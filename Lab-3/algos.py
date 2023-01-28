@@ -28,13 +28,13 @@ class GeneticAlgorithm():
         child2[:partition] = tour2[:partition]; child2[self.cities-partition:] = tour2[self.cities-partition:]
         for ind, val in enumerate(child1):
             if ind>partition and ind<self.cities-partition:
-                break
+                continue
             if np.sum(np.where(child1 == val, 1, 0)) >= 2:
                 child1[ind] = get_legal_label(val, child1, child2, partition, self.cities-partition)
 
         for ind, val in enumerate(child2):
             if ind>partition and ind<self.cities-partition:
-                break
+                continue
             if np.sum(np.where(child2 == val, 1, 0)) >= 2:
                 child2[ind] = get_legal_label(val, child2, child1, partition, self.cities-partition)
         return (child1, child2)

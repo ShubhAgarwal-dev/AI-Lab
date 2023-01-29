@@ -21,10 +21,6 @@ population_array: list[list[int]] = [[0, 1, 2, 3, 4],
                                      [3, 2, 0, 1, 4],
                                      [0, 2, 3, 1, 4]]
 
-
-# for x in population_array:
-#     print(getFitness(distance_array, x))
-
 parents: list[list[int]] = []
 print(roulette_parents(distance_array,
                        number_of_parents, population_array, parents))

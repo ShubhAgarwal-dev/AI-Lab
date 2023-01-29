@@ -72,7 +72,7 @@
 \hypersetup{pdftitle={MDS Scribing}}
 %--------------------------------------------------------
 \begin{document}
-\title[Rank Nullity Theorem and Matrix Representation]{Lecture 5 and 6}
+\title[Rank Nullity Theorem and Matrix Representation]{Lecture 5}
 
 \author{Shubh Agarwal}
  \email[Shubh]{210020047@iitdh.ac.in}%
@@ -85,7 +85,7 @@
  \author{Abhiram K}
  \email[Abhiram]{210150001@iitdh.ac.in}%
 
-\author{Rishabh Sharad}
+\author{Rishabh Pomaje}
 \email[Rishabh]{210020036@iitdh.ac.in}%
 
 %\thanks{Thanks for Author One.}
@@ -119,6 +119,36 @@ in linear transformation.
 \end{theorem}
 
 \begin{proof}[Proof]
+
+    \begin{center}
+        \centering
+        \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+         \node[ele,label=left:$v_{1}$] (a1) at (0,7) {};    
+         \node[ele,label=left:$v_{2}$] (a2) at (0,6) {};    
+         \node[ele,label=left:$ \vdots $] (a3) at (0,5) {};
+         \node[ele,label=left:$v_{n-1}$] (a4) at (0,4) {};
+         \node[ele,label=left:$\phi_{1}$] (a5) at (0,3) {};
+         \node[ele,label=left:$\vdots$] (a6) at (0,2) {};
+         \node[ele,label=left:$\phi_{l}$] (a7) at (0,1) {};
+    
+         \node[ele,,label=right:$w_{1}$] (b1) at (4,7) {};
+         \node[ele,,label=right:$w_{2}$] (b2) at (4,6) {};
+         \node[ele,,label=right:$ \vdots $] (b3) at (4,5) {};
+         \node[ele,,label=right:$w_{n-l}$] (b4) at (4,4) {};
+         \node[ele,,label=right:$w_{n-l+1}$] (b5) at (4,3) {};
+         \node[ele,,label=right:$0$] (b5) at (4,2) {};
+       
+         \node[draw,fit= (a1) (a2) (a3) (a4) (a5) (a6) (a7),minimum width=2cm] {} ;
+         \node[draw,fit= (b1) (b2) (b3) (b4) (b5),minimum width=2cm] {} ;  
+         \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
+         \draw[->,thick,shorten <=2pt,shorten >=2pt] (a2) -- (b2);
+         \draw[->,thick,shorten <=2pt,shorten >=2pt] (a4) -- (b4);
+         \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
+         \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
+         \draw[->,thick,shorten <=2pt,shorten >=2] (a6) -- (b5);
+         \draw[->,thick,shorten <=2pt,shorten >=2] (a7) -- (b5);
+        \end{tikzpicture}
+        \end{center}
 	
 	Let $\phi_1,\phi_2,\ldots,\phi_l$ be the minimum vectors will that span $Ker(T)$, where l is the \dim(Ker(T)).\\
 	And $v_1, v_2, \ldots, v_{n-l}$ be the vectors that will span the remaining vector space $V$ where, $n$ is the \dim(V).$
@@ -252,15 +282,15 @@ Now the question is how should we connect $\alpha_{i}$ to the $\beta_{j}$ such t
 $$
 \begin{array}
 \\
-    & \text{ We know that } Tv = w 
-    & v = \sum_{i=1}^{n}\alpha_{i}e_{i} 
-    & \text{Applying linear transformation T on both sides we get} 
-    & Tv = \sum_{i=1}^{n}\alpha_{i}T \left( e_{i} \right) 
+    & \text{ We know that } Tv = w \\
+    & v = \sum_{i=1}^{n}\alpha_{i}e_{i} \\
+    & \text{Applying linear transformation T on both sides we get} \\
+    & Tv = \sum_{i=1}^{n}\alpha_{i}T \left( e_{i} \right)
     \\
-    & \text{Now what is $Te_{i}$ ?}
-    &\text{In this case $e_{i} \rightarrow{} w_{i}$} 
+    & \text{Now what is $Te_{i}$ ?} \\
+    &\text{In this case $e_{i} \rightarrow{} w_{i}$}
     \\
-    & \therefore Tv = \sum_{i=1}^{n}\alpha_{i}w_{i}
+    & \therefore Tv = \sum_{i=1}^{n}\alpha_{i}w_{i} \\
 \end{array}
 $$
 But we want $w_{i}$ to be represented in terms of Standard Basis. \newline
@@ -429,35 +459,6 @@ $$
 $$
 
 
-\begin{center}
-    \centering
-    \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
-     \node[ele,label=left:$v_{1}$] (a1) at (0,7) {};    
-     \node[ele,label=left:$v_{2}$] (a2) at (0,6) {};    
-     \node[ele,label=left:$ \vdots $] (a3) at (0,5) {};
-     \node[ele,label=left:$v_{n-1}$] (a4) at (0,4) {};
-     \node[ele,label=left:$\phi_{1}$] (a5) at (0,3) {};
-     \node[ele,label=left:$\vdots$] (a6) at (0,2) {};
-     \node[ele,label=left:$\phi_{l}$] (a7) at (0,1) {};
-
-     \node[ele,,label=right:$w_{1}$] (b1) at (4,7) {};
-     \node[ele,,label=right:$w_{2}$] (b2) at (4,6) {};
-     \node[ele,,label=right:$ \vdots $] (b3) at (4,5) {};
-     \node[ele,,label=right:$w_{n-l}$] (b4) at (4,4) {};
-     \node[ele,,label=right:$w_{n-l+1}$] (b5) at (4,3) {};
-     \node[ele,,label=right:$0$] (b5) at (4,2) {};
-   
-     \node[draw,fit= (a1) (a2) (a3) (a4) (a5) (a6) (a7),minimum width=2cm] {} ;
-     \node[draw,fit= (b1) (b2) (b3) (b4) (b5),minimum width=2cm] {} ;  
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a2) -- (b2);
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a4) -- (b4);
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
-     \draw[->,thick,shorten <=2pt,shorten >=2pt] (a5) -- (b5);
-     \draw[->,thick,shorten <=2pt,shorten >=2] (a6) -- (b5);
-     \draw[->,thick,shorten <=2pt,shorten >=2] (a7) -- (b5);
-    \end{tikzpicture}
-    \end{center}
 %This text is a sample for a short bibliography. You can cite a book by making use of
 %the command \verb"\cite{KarelRektorys}": \cite{KarelRektorys}. Papers can be cited
 %similarly: \cite{Bertoti97}. If you want multiple citations to appear in a single set

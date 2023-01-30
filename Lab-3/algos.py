@@ -48,3 +48,4 @@ class GeneticAlgorithm():
         return (child1, child2)
 
     def fitness_function(self, tour):
+        pass

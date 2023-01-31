@@ -16,6 +16,14 @@ def cost_calc(distance_array:np.ndarray, tour):
             dist += distance_array[prev_node][node]
     return int(dist)
 
+def cost_calc_2(graph, distance_array, cities):
+    dis = 0
+    for i in range(cities):
+        for j in range(cities):
+            if graph[i][j]:
+                dis += distance_array[i][j]
+    return dis
+
 
 def parent(connection, node:int) ->  int:
     if connection[node] != node:
@@ -83,13 +91,13 @@ def get_edges(distance_array:np.ndarray, cities:int):
 
 def greedy(distance_array:np.ndarray, cities:int):
     edges = get_edges(distance_array, cities)
-    graph = np.zeros((cities, cities), np.int8)
+    graph = np.zeros((cities, cities), int)
     edges.sort(axis=0)
     print(edges)
     connection = np.zeros(cities, bool)
     for edge in edges:
-        edge_1 = int(edge[1])
-        edge_2 = int(edge[2])
+        edge_1 = int(edge[1]+0.1)
+        edge_2 = int(edge[2]+0.1)
         if not connection[edge_1] or not connection[edge_2]:
             if np.sum(connection) == cities:
                 break
@@ -97,26 +105,42 @@ def greedy(distance_array:np.ndarray, cities:int):
             connection[edge_2] = True
             graph[edge_1][edge_2] = 1
             graph[edge_2][edge_2] = 1
-    print(graph)
-    return get_bfs_tour(graph, get_lowest_weight_node(distance_array))
+            print(edge_1, edge_2)
+    for i in range(cities):
+        print(graph[i])
+    # return get_bfs_tour(graph, get_lowest_weight_node(distance_array))
+    return graph
+
+def greedy2(distance_array:np.ndarray, cities:int):
+    edges = get_edges(distance_array, cities)
+    edges.sort(axis=0)
+    print(edges)
+    dis = 0
+    connection = np.zeros(cities, bool)
+    for edge in edges:
+        edge_1 = int(edge[1]+0.1)
+        edge_2 = int(edge[2]+0.1)
+        if not connection[edge_1] or not connection[edge_2]:
+            if np.sum(connection) == cities:
+                break
+            connection[edge_1] = True
+            connection[edge_2] = True
+            dis += distance_array[edge_1][edge_2]
+    return dis
 
 
 def get_bfs_tour(graph, initial_city:int):
-    to_visit_queue = Queue(maxsize=0)
-    to_visit_queue.put(initial_city)
     checker = []
     checker.append(initial_city)
     visited = []
-    while not to_visit_queue.empty():
-        to_visit = to_visit_queue.get()
-        checker.remove(to_visit)
+    while checker != []:
+        to_visit = checker.pop()
         visited.append(to_visit)
-        neighbours = [ind for ind, val in enumerate(graph[visited]) if int(val)==1]
+        neighbours = [ind for ind, val in enumerate(graph[to_visit]) if int(val)==1]
         for neighbour in neighbours:
             if neighbour not in checker and neighbour not in visited:
-                to_visit_queue.put(neighbour)
                 checker.append(neighbour)
-    
+    print(visited)
     return visited
 
 
@@ -130,6 +154,5 @@ if __name__ == "__main__":
 
     d, n, c, dis_arr = array_converter(r"Lab-3\euc_100")
     # tourr = try1(dis_arr, get_lowest_weight_node(dis_arr), n)
-    tourr = greedy(dis_arr, n)
-    print(tourr)
-    print(cost_calc(dis_arr, tourr))
+    grp = greedy2(dis_arr, n)
+    print(grp)

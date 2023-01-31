@@ -32,15 +32,35 @@ eletism(vals[3], 10, population, fittest_elements)
 #     print(i)
 #     print()
 
+best_fitness: float = 10**8
 
-for i in range(0, 10, 2):
-    algs: GeneticAlgorithm = GeneticAlgorithm(cities=vals[1])
-    crossover_ele: tuple[list[int], list[int]] = algs.partial_crossover(
-        tour1=fittest_elements[i], tour2=fittest_elements[i+1])
-    for i in crossover_ele:
-        print(i)
-        print(getFitness(vals[3], i))
-        print()
+for xyz in range(0, 20000):
+    for i in range(0, len(fittest_elements), 2):
+        algs: GeneticAlgorithm = GeneticAlgorithm(cities=vals[1])
+        crossover_ele: tuple[list[int], list[int]] = algs.partial_crossover(
+            tour1=fittest_elements[i], tour2=fittest_elements[i+1])
+        fittest_elements[i] = crossover_ele[0]
+        fittest_elements[i+1] = crossover_ele[1]
+
+    copy_fittest_elements: list[list[int]] = []
+
+    eletism(vals[3], 10,
+            fittest_elements, copy_fittest_elements)
+    fittest_elements = []
+    for i in copy_fittest_elements:
+        fittest_elements.append(i)
+        if (getFitness(vals[3], i) < best_fitness):
+            best_fitness = getFitness(vals[3], i)
+    if (xyz % 25 == 0):
+        for i in fittest_elements:
+            random_num_1 = np.random.randint(0, 100)
+            random_num_2 = np.random.randint(0, 100)
+            temp = i[random_num_1]
+            i[random_num_1] = i[random_num_2]
+            i[random_num_2] = temp
+
+print(best_fitness)
+
 
 # PARTIAL CROSSOVER TEST CODE
 

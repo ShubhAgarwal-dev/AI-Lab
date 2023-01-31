@@ -1,5 +1,5 @@
 def fileReader(path: str) -> tuple[str, int, list[tuple[float, float]], list[list[float]]]:
-    file: TextIOWrapper = open("D:\AI LAB\AI-Lab\Lab-3\euc_100", "r")
+    file = open("D:\AI LAB\AI-Lab\Lab-3\euc_100", "r")
     type_of_distance: str = file.readline().strip('\n')
     number_of_cities: int = int(file.readline().strip('\n'))
     coordinate_array: list[tuple[float, float]] = []

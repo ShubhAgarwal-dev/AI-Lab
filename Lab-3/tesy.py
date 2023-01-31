@@ -2,16 +2,36 @@ import numpy as np
 from algos import GeneticAlgorithm
 from file_reader import array_converter
 from timeit import default_timer
+from selection_algos import *
+from file_reader_modified import fileReader
+from selection_algos import getFitness
+import time
 
-initial_clock = default_timer()
 
-vals = array_converter(r".\Lab-3\euc_100")
+# vals = array_converter("D:\AI LAB\AI-Lab\Lab-3\euc_100")
+
+# print(vals[3])
+vals = fileReader("D: \AI LAB\AI-Lab\Lab-3\euc_100")
+
+population: list[list[int]] = []
+while (len(population) < 100):
+    testGuess: list[int] = []
+    while (len(testGuess) < vals[1]):
+        x: int = np.random.randint(0, vals[1])
+        if (x not in testGuess):
+            testGuess.append(x)
+    if (testGuess not in population):
+        population.append(testGuess)
 
 
-parent1 = np.array([2, 5, 6, 3, 1, 7, 8, 4, 9], dtype=np.int16)
-parent2 = np.array([3, 4, 1, 7, 9, 2, 8, 5, 6], dtype=np.int16)
+fittest_elements: list[list[int]] = []
+eletism(vals[3], 10, population, fittest_elements)
 
-gen = GeneticAlgorithm(cities=9)
-print(gen.partial_crossover(parent1, parent2))
-end_clock = default_timer()
-print(end_clock - initial_clock)
+
+for i in range(0, 10, 2):
+    algs: GeneticAlgorithm = GeneticAlgorithm(cities=vals[1])
+    crossover_ele = algs.partial_crossover(
+        tour1=fittest_elements[i], tour2=fittest_elements[i+1])
+    for i in crossover_ele:
+        print(i)
+        print()

@@ -46,6 +46,3 @@ class GeneticAlgorithm():
                 child2[ind] = get_legal_label(
                     val, child2, child1, partition, self.cities-partition)
         return (child1, child2)
-
-    def fitness_function(self, tour):
-        pass

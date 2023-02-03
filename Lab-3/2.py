@@ -166,7 +166,9 @@ if __name__ == "__main__":
 
     best_fitness: float = 10**8
     fittest_element = []
-    for xyz in range(0, 10000):
+    xyz = 0
+    while best_fitness > 1600:
+        xyz = xyz+1
         for i in range(0, len(fittest_elements), 2):
             algs: GeneticAlgorithm = GeneticAlgorithm(cities=vals[1])
             crossover_ele: tuple[list[int], list[int]] = algs.partial_crossover(
@@ -186,11 +188,15 @@ if __name__ == "__main__":
                 fittest_element = i
         if (xyz % 25 == 0):
             for i in fittest_elements:
-                random_num_1 = np.random.randint(0, 100)
-                random_num_2 = np.random.randint(0, 100)
-                temp = i[random_num_1]
-                i[random_num_1] = i[random_num_2]
-                i[random_num_2] = temp
+                copy_ele1: list[int] = i
+                random_num_1 = np.random.randint(0, vals[1])
+                random_num_2 = np.random.randint(0, vals[1])
+                temp = copy_ele1[random_num_1]
+                copy_ele1[random_num_1] = copy_ele1[random_num_2]
+                copy_ele1[random_num_2] = temp
+                if (getFitness(vals[3], copy_ele1) < getFitness(vals[3], i)):
+                    i = copy_ele1
+        print(best_fitness)
 
     print(best_fitness)
     print(fittest_element)

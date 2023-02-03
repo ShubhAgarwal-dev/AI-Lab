@@ -141,7 +141,6 @@ class GeneticAlgorithm():
             if (child_2[i] in repMap2.keys()):
                 while (child_2[i] in repMap2.keys()):
                     child_2[i] = repMap2[child_2[i]]
-
         return (child_1, child_2)
 
 
@@ -162,23 +161,28 @@ if __name__ == "__main__":
             population.append(testGuess)
 
     fittest_elements: list[list[int]] = []
-    eletism(vals[3], 10, population, fittest_elements)
+    eletism(vals[3], 30, population, fittest_elements)
+    print(getFitness(vals[3], [34, 92, 81, 21, 39, 24, 47, 5, 76, 6, 95, 69, 83, 68, 31, 49, 23, 14, 91, 51, 65, 0, 38, 19, 4, 57, 85, 10, 18, 13, 52, 86, 7, 56, 82, 3, 94, 40, 67, 89, 35, 78, 42, 90, 44, 45, 53,
+          80, 62, 71, 58, 37, 43, 87, 79, 70, 50, 61, 77, 59, 17, 99, 33, 84, 15, 64, 55, 9, 30, 2, 93, 12, 66, 32, 46, 8, 73, 75, 88, 20, 25, 36, 29, 98, 41, 48, 63, 1, 54, 97, 22, 16, 26, 72, 11, 28, 60, 27, 74, 96]))
+    population.pop()
+    population.append([34, 92, 81, 21, 39, 24, 47, 5, 76, 6, 95, 69, 83, 68, 31, 49, 23, 14, 91, 51, 65, 0, 38, 19, 4, 57, 85, 10, 18, 13, 52, 86, 7, 56, 82, 3, 94, 40, 67, 89, 35, 78, 42, 90, 44, 45, 53, 80,
+                      62, 71, 58, 37, 43, 87, 79, 70, 50, 61, 77, 59, 17, 99, 33, 84, 15, 64, 55, 9, 30, 2, 93, 12, 66, 32, 46, 8, 73, 75, 88, 20, 25, 36, 29, 98, 41, 48, 63, 1, 54, 97, 22, 16, 26, 72, 11, 28, 60, 27, 74, 96])
 
     best_fitness: float = 10**8
     fittest_element = []
     xyz = 0
     while best_fitness > 1600:
+        prevfitness = best_fitness
         xyz = xyz+1
         for i in range(0, len(fittest_elements), 2):
             algs: GeneticAlgorithm = GeneticAlgorithm(cities=vals[1])
             crossover_ele: tuple[list[int], list[int]] = algs.partial_crossover(
                 tour1=fittest_elements[i], tour2=fittest_elements[i+1])
-            fittest_elements[i] = crossover_ele[0]
-            fittest_elements[i+1] = crossover_ele[1]
-
+            fittest_elements.append(crossover_ele[0])
+            fittest_elements.append(crossover_ele[1])
         copy_fittest_elements: list[list[int]] = []
 
-        eletism(vals[3], 10,
+        eletism(vals[3], 30,
                 fittest_elements, copy_fittest_elements)
         fittest_elements = []
         for i in copy_fittest_elements:
@@ -196,7 +200,8 @@ if __name__ == "__main__":
                 copy_ele1[random_num_2] = temp
                 if (getFitness(vals[3], copy_ele1) < getFitness(vals[3], i)):
                     i = copy_ele1
-        print(best_fitness)
-
+        if (prevfitness != best_fitness):
+            print(best_fitness)
+            prevfitness = best_fitness
     print(best_fitness)
     print(fittest_element)

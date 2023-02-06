@@ -398,5 +398,3 @@ class GA_TSP(GeneticAlgorithmBase):
         self.best_x = self.generation_best_X[global_best_index]
         self.best_y = self.func(np.array([self.best_x]))
         return self.best_x, self.best_y
-
-

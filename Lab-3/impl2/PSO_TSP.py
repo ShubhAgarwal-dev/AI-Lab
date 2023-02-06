@@ -86,25 +86,8 @@ def func_transformer(func):
             return np.array([func_cached(tuple(x)) for x in X])
 
         return func_warped
-    # elif mode == 'multithreading':
-    #     from multiprocessing.dummy import Pool as ThreadPool
 
-    #     pool = ThreadPool()
-
-    #     def func_transformed(X):
-    #         return np.array(pool.map(func, X))
-
-    #     return func_transformed
-    # elif mode == 'multiprocessing':
-    #     from multiprocessing import Pool
-    #     pool = Pool()
-
-    #     def func_transformed(X):
-    #         return np.array(pool.map(func, X))
-
-    #     return func_transformed
-
-    else:  # common
+    else:
         def func_transformed(X):
             return np.array([func(x) for x in X])
 

@@ -13,7 +13,7 @@ class ACA_TSP:
         self.max_iter = max_iter  
         self.alpha = alpha  
         self.beta = beta  
-        self.rho = rho  
+        self.rho = rho
 
         self.prob_matrix_distance = 1 / (distance_matrix + 1e-10 * np.eye(n_dim, n_dim))  
 

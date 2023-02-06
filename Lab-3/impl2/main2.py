@@ -38,7 +38,7 @@ def cal_total_distance(routine):
 start = default_timer()
 
 # pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=200, max_iter=800, w=0.8, c1=0.1, c2=0.1)
-pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=50, max_iter=800, w=0.8, c1=0.1, c2=0.1)
+pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=100, max_iter=650, w=0.8, c1=0.1, c2=0.1)
 
 
 best_points, best_distance = pso_tsp.run()
@@ -48,7 +48,7 @@ print('best_distance', best_distance)
 print('best_distance', type(best_distance))
 
 aca = ACO_TSP(func=cal_total_distance, n_dim=num_points,
-              size_pop=25, max_iter=100,
+              size_pop=40, max_iter=200,
               distance_matrix=distance_matrix, initial_x=[best_points], initial_y=[best_distance])
 
 best_x, best_y = aca.run()

@@ -26,9 +26,9 @@
     //     "editorError.foreground": "#ff000000",
     //     "editorError.background": "#00ff0000"
     // },
-    "autopep8.interpreter": [
-        "\"C:\\Program Files\\Python311\\python.exe\""
-    ],
+    // "autopep8.interpreter": [
+    //     "\"C:\\Program Files\\Python311\\python.exe\""
+    // ],
     "autopep8.logLevel": "info",
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"

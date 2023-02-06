@@ -54,6 +54,12 @@ class ACA_TSP:
                 delta_tau[n1, n2] += 1 / y[j] 
 
             self.Tau = (1 - self.rho) * self.Tau + delta_tau
+            if i%10 == 0:
+                best_generation = np.array(self.generation_best_Y).argmin()
+                self.best_x = self.generation_best_X[best_generation]
+                self.best_y = self.generation_best_Y[best_generation]
+                print(self.best_x)
+                print(self.best_y)
 
         best_generation = np.array(self.generation_best_Y).argmin()
         self.best_x = self.generation_best_X[best_generation]
@@ -118,6 +124,13 @@ class ACO_TSP:
                 delta_tau[n1, n2] += 1 / y[j] 
 
             self.Tau = (1 - self.rho) * self.Tau + delta_tau
+
+            if i%10 == 0:
+                best_generation = np.array(self.generation_best_Y).argmin()
+                self.best_x = self.generation_best_X[best_generation]
+                self.best_y = self.generation_best_Y[best_generation]
+                print(self.best_x)
+                print(self.best_y)
 
         best_generation = np.array(self.generation_best_Y).argmin()
         self.best_x = self.generation_best_X[best_generation]

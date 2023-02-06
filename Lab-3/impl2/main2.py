@@ -25,7 +25,7 @@ def array_converter(file_loc: Union[str, Path]):
                 distance_array[i][j] = dis[j]
         return (distance_type, number_of_args, coordinates_array, distance_array)
 
-_, num_points, points_coordinate, distance_matrix = array_converter(r"D:\Projects\AI Lab\Lab-3\dataset\noneuc_250")
+_, num_points, points_coordinate, distance_matrix = array_converter(r"D:\Projects\AI Lab\Lab-3\dataset\euc_500")
 
 
 def cal_total_distance(routine):
@@ -37,8 +37,8 @@ def cal_total_distance(routine):
 
 start = default_timer()
 
-# pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=200, max_iter=800, w=0.8, c1=0.1, c2=0.1)
-pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=100, max_iter=650, w=0.8, c1=0.1, c2=0.1)
+pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=200, max_iter=800, w=0.8, c1=0.1, c2=0.1)
+# pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=100, max_iter=650, w=0.8, c1=0.1, c2=0.1)
 
 
 best_points, best_distance = pso_tsp.run()
@@ -46,6 +46,10 @@ best_points, best_distance = pso_tsp.run()
 print(best_points)
 print('best_distance', best_distance)
 print('best_distance', type(best_distance))
+
+end = default_timer()
+
+print(f"Time1:{end-start}")
 
 aca = ACO_TSP(func=cal_total_distance, n_dim=num_points,
               size_pop=40, max_iter=200,

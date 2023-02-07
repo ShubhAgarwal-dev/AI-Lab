@@ -78,8 +78,7 @@ def print_arr(arr):
     print(f"{i}, " for i in arr)
 
 def print_function(best_points):
-    for i in best_points:
-        print(i,end=", ")
+    print(list(best_points))
 
 def array_converter(file_loc: Union[str, Path]):
     with open(file=file_loc, mode='r') as file:
@@ -106,7 +105,7 @@ if __name__ == "__main__":
     ecu, cities, _, distance_matrix = array_converter(path__)
 
     if ecu == "euclidean":
-        aco = ACO(func=cal_total_distance,distance_matrix=distance_matrix, n_dim=cities, size_pop=min(250, cities), max_iter=200, alpha=3, beta=3, rho=0.1)
+        aco = ACO(func=cal_total_distance,distance_matrix=distance_matrix, n_dim=cities, size_pop=min(250, cities), max_iter=400, alpha=2, beta=5, rho=0.1)
     else:
         aco = ACO(func=cal_total_distance,distance_matrix=distance_matrix, n_dim=cities, size_pop=min(250, cities), max_iter=300, alpha=5, beta=5, rho=0.05)
         

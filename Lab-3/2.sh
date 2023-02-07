@@ -1,2 +1,4 @@
-#!/bin/sh
-python3 2.py $1
+#!/bin/bash
+echo "Enter complete location of dataset"
+read locn
+python3 2.py $locn

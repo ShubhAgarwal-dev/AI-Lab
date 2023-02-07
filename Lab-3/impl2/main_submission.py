@@ -32,11 +32,11 @@ class ACO:
             for j in range(self.size_pop):  
                 self.Table[j, 0] = 0  # star
                 for k in range(self.n_dim - 1):  
-                    taboo_set = set(self.Table[j, :k + 1])  
-                    allow_list = list(set(range(self.n_dim)) - taboo_set)  
-                    prob = prob_matrix[self.Table[j, k], allow_list]
-                    prob = prob / prob.sum()  
-                    next_point = np.random.choice(allow_list, size=1, p=prob)[0]
+                    taboo_set = set(self.Table[j, :k + 1])  #allows exploratation
+                    allow_list = list(set(range(self.n_dim)) - taboo_set)  #where to go
+                    prob = prob_matrix[self.Table[j, k], allow_list] #gets the prob all allowed ponts
+                    prob = prob / prob.sum()  #returns prob dist of all points
+                    next_point = np.random.choice(allow_list, size=1, p=prob)[0] #random sampling wrt prob dist
                     self.Table[j, k + 1] = next_point
 
             y = np.array([self.func(i) for i in self.Table])
@@ -46,11 +46,11 @@ class ACO:
             self.generation_best_X.append(x_best)
             self.generation_best_Y.append(y_best)
 
-            delta_tau = np.zeros((self.n_dim, self.n_dim))
+            delta_tau = np.zeros((self.n_dim, self.n_dim)) #pheromone updation
             for j in range(self.size_pop):
                 for k in range(self.n_dim - 1):
                     n1, n2 = self.Table[j, k], self.Table[j, k + 1]
-                    delta_tau[n1, n2] += 1 / y[j] 
+                    delta_tau[n1, n2] += 1 / y[j] #updating tau
                 n1, n2 = self.Table[j, self.n_dim - 1], self.Table[j, 0]
                 delta_tau[n1, n2] += 1 / y[j] 
 

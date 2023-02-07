@@ -1,10 +1,11 @@
+from stimulatedAnnealing_2 import SA_TSP
 from PSO_TSP import PSO_TSP
-from ACO import ACO_TSP
 import numpy as np
 from pathlib import Path
 from typing import Union
-import matplotlib.pyplot as plt
 from timeit import default_timer
+
+start = default_timer()
 
 def array_converter(file_loc: Union[str, Path]):
     with open(file=file_loc, mode='r') as file:
@@ -25,41 +26,30 @@ def array_converter(file_loc: Union[str, Path]):
                 distance_array[i][j] = dis[j]
         return (distance_type, number_of_args, coordinates_array, distance_array)
 
+
 _, num_points, points_coordinate, distance_matrix = array_converter(r"D:\Projects\AI Lab\Lab-3\dataset\euc_100")
 
 
 def cal_total_distance(routine):
-    '''The objective function. input routine, return total distance.
-    cal_total_distance(np.arange(num_points))
-    '''
     num_points, = routine.shape
     return sum([distance_matrix[routine[i % num_points], routine[(i + 1) % num_points]] for i in range(num_points)])
 
-start = default_timer()
-
-pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=200, max_iter=800, w=0.8, c1=0.1, c2=0.1)
-# pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=100, max_iter=650, w=0.8, c1=0.1, c2=0.1)
-
-
+pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=200, max_iter=800, w=0.1, c1=0.7, c2=0.7)
 best_points, best_distance = pso_tsp.run()
 
-print(best_points)
-print('best_distance', best_distance)
-print('best_distance', type(best_distance))
+print(best_points, best_distance)
+
 
 end = default_timer()
+print(f"Time:{end-start}")
 
-print(f"Time1:{end-start}")
+sa_tsp = SA_TSP(func=cal_total_distance, x0=best_points, T_max=1000, T_min=1, L=10*num_points)
 
-aca = ACO_TSP(func=cal_total_distance, n_dim=num_points,
-              size_pop=40, max_iter=200,
-              distance_matrix=distance_matrix, initial_x=[best_points], initial_y=[best_distance])
+best_points, best_distance = sa_tsp.run()
+print(best_points, best_distance, cal_total_distance(best_points))
 
-best_x, best_y = aca.run()
-print(best_x, best_y)
 
 end = default_timer()
-
 print(f"Time:{end-start}")
 
 

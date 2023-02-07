@@ -59,7 +59,7 @@ def cal_total_distance(routine):
     num_points, = routine.shape
     return sum([distance_matrix[routine[i % num_points], routine[(i + 1) % num_points]] for i in range(num_points)])
 
-# sa_tsp = SA_TSP(func=cal_total_distance, x0=range(num_points), T_max=100, T_min=1, L=10 * num_points)
+# sa_tsp = SA_TSP(func=cal_total_distance, x0=range(num_points), T_max=1000, T_min=1, L=10)
 
 # best_points, best_distance = sa_tsp.run()
 # print(best_points, best_distance, cal_total_distance(best_points))
@@ -114,10 +114,16 @@ import matplotlib.pyplot as plt
 # plt.show()
 
 
+# aca = ACA_TSP(func=cal_total_distance, n_dim=num_points,
+#               size_pop=50, max_iter=250,
+#               distance_matrix=distance_matrix,
+#               alpha=5, beta=15, rho=0.4)
+
+
 aca = ACA_TSP(func=cal_total_distance, n_dim=num_points,
-              size_pop=50, max_iter=150,
+              size_pop=num_points, max_iter=250,
               distance_matrix=distance_matrix,
-              alpha=5, beta=3, rho=0.5)
+              alpha=1, beta=3, rho=0.5)
 
 best_x, best_y = aca.run()
 print(best_x, best_y)
@@ -126,9 +132,9 @@ end = default_timer()
 
 print(f"Time:{end-start}")
 
-fig, ax = plt.subplots(1, 2)
-best_points_ = np.concatenate([best_x, [best_x[0]]])
-best_points_coordinate = points_coordinate[best_points_, :]
-ax[0].plot(best_points_coordinate[:, 0], best_points_coordinate[:, 1], 'o-r')
-pd.DataFrame(aca.y_best_history).cummin().plot(ax=ax[1])
-plt.show()
+# fig, ax = plt.subplots(1, 2)
+# best_points_ = np.concatenate([best_x, [best_x[0]]])
+# best_points_coordinate = points_coordinate[best_points_, :]
+# ax[0].plot(best_points_coordinate[:, 0], best_points_coordinate[:, 1], 'o-r')
+# pd.DataFrame(aca.y_best_history).cummin().plot(ax=ax[1])
+# plt.show()

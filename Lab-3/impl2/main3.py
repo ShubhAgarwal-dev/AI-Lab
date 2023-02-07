@@ -7,6 +7,11 @@ from timeit import default_timer
 
 start = default_timer()
 
+def print_function(best_points):
+    for i in best_points:
+        print(i,end=",")
+
+
 def array_converter(file_loc: Union[str, Path]):
     with open(file=file_loc, mode='r') as file:
         file_content: list[str] = file.readlines()
@@ -46,7 +51,10 @@ print(f"Time:{end-start}")
 sa_tsp = SA_TSP(func=cal_total_distance, x0=best_points, T_max=1000, T_min=1, L=10*num_points)
 
 best_points, best_distance = sa_tsp.run()
-print(best_points, best_distance, cal_total_distance(best_points))
+# print(best_points, best_distance, cal_total_distance(best_points))
+print_function(best_points)
+print()
+print(best_distance)
 
 
 end = default_timer()

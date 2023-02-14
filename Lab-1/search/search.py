@@ -19,10 +19,6 @@ Pacman agents (in searchAgents.py).
 
 import util
 import heapq
-<<<<<<< HEAD
-
-=======
->>>>>>> shubh
 
 class SearchProblem:
     """
@@ -146,14 +142,9 @@ def breadthFirstSearch(problem):
                     queue_state.push(new_coordinate)
     return path
 
-<<<<<<< HEAD
 
 class ExtendedPriorotyQueue(util.PriorityQueue):
 
-=======
-class ExtendedPriorotyQueue(util.PriorityQueue):
-    
->>>>>>> shubh
     def __init__(self):
         util.PriorityQueue.__init__(self)
 
@@ -166,31 +157,19 @@ class ExtendedPriorotyQueue(util.PriorityQueue):
             if i == item:
                 return cost
         return 0
-<<<<<<< HEAD
 
 
-=======
->>>>>>> shubh
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     initial_state = problem.getStartState()
     frontier = ExtendedPriorotyQueue()
     frontier.push(initial_state, 0)
-<<<<<<< HEAD
-    path_dic = {initial_state: []}
-    explored = []
-    while True:
-        if frontier.isEmpty():
-            return []
-        sel_state, cost = frontier.pop_new()
-=======
     path_dic = {initial_state:[]}
     explored =[]
     while True:
         if frontier.isEmpty():
             return [] 
         sel_state, cost= frontier.pop_new()
->>>>>>> shubh
         explored.append(sel_state)
         path = path_dic.pop(sel_state)
         if problem.isGoalState(sel_state):
@@ -203,11 +182,7 @@ def uniformCostSearch(problem):
                 new_cost = cost + add_cost
                 if new_state not in explored and new_state not in path_dic.keys():
                     frontier.push(new_state, new_cost)
-<<<<<<< HEAD
-                    path_dic.update({new_state: new_path})
-=======
                     path_dic.update({new_state:new_path})
->>>>>>> shubh
                 elif new_state in path_dic.keys():
                     old_cost = frontier.get_cost(new_state)
                     if old_cost > new_cost:
@@ -229,21 +204,12 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     initial_state = problem.getStartState()
     frontier = ExtendedPriorotyQueue()
     frontier.push(initial_state, heuristic(initial_state, problem))
-<<<<<<< HEAD
-    path_dic = {initial_state: []}
-    explored = []
-    while True:
-        if frontier.isEmpty():
-            return []
-        sel_state, cost = frontier.pop_new()
-=======
     path_dic = {initial_state:[]}
     explored = []
     while True:
         if frontier.isEmpty():
             return [] 
         sel_state, cost= frontier.pop_new()
->>>>>>> shubh
         explored.append(sel_state)
         path = path_dic.pop(sel_state)
         if problem.isGoalState(sel_state):
@@ -254,25 +220,15 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             for child in successors:
                 new_state, new_dir, add_cost = child
                 new_path = path + [new_dir]
-<<<<<<< HEAD
-                new_cost = cost + add_cost + \
-                    heuristic(new_state, problem) - old_heu
-                if new_state not in explored and new_state not in path_dic.keys():
-                    frontier.push(new_state, new_cost)
-                    path_dic.update({new_state: new_path})
-=======
                 new_cost = cost + add_cost + heuristic(new_state, problem) - old_heu
                 if new_state not in explored and new_state not in path_dic.keys():
                     frontier.push(new_state, new_cost)
                     path_dic.update({new_state:new_path})
->>>>>>> shubh
-                    # print(frontier.heap[i][2] for i in range(len(frontier.heap)))
                 elif new_state in path_dic.keys():
                     old_cost = frontier.get_cost(new_state)
                     if old_cost >= new_cost:
                         frontier.update(new_state, new_cost)
-                        path_dic[new_state] = new_path
-    util.raiseNotDefined()
+                        path_dic[new_state] = new_pat
 
 
 # Abbreviations

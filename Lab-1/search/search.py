@@ -228,7 +228,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                     old_cost = frontier.get_cost(new_state)
                     if old_cost >= new_cost:
                         frontier.update(new_state, new_cost)
-                        path_dic[new_state] = new_pat
+                        path_dic[new_state] = new_path
 
 
 # Abbreviations

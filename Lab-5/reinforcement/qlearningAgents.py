@@ -19,6 +19,7 @@ from featureExtractors import *
 import random
 import util
 import math
+from collections import defaultdict
 
 
 class QLearningAgent(ReinforcementAgent):
@@ -45,7 +46,7 @@ class QLearningAgent(ReinforcementAgent):
     def __init__(self, **args):
         "You can initialize Q-values here..."
         ReinforcementAgent.__init__(self, **args)
-        self.q_vals = {}
+        self.q_vals = defaultdict(lambda: 0.0)
 
         "*** YOUR CODE HERE ***"
 
@@ -55,10 +56,6 @@ class QLearningAgent(ReinforcementAgent):
           Should return 0.0 if we have never seen a state
           or the Q node value otherwise
         """
-        if not self.q_vals:
-            return 0.0
-        if (state, action) not in self.q_vals.keys():
-            return 0.0
         return self.q_vals[(state, action)]
 
         "*** YOUR CODE HERE ***"

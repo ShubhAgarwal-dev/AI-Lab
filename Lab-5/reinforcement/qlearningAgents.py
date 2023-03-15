@@ -117,7 +117,7 @@ class QLearningAgent(ReinforcementAgent):
         random_sam = random.random()
         if random_sam > self.epsilon:
             return self.getPolicy(state)
-        return legalActions[random.randrange(len(legalActions))]
+        return random.choice(legalActions)
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
 
